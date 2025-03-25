@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|c:\\users\\aleja\\documents\\ufv\\2ano\\2cuatrimestre\\proyectos 1\\unified\\unified\\api\\api_unified\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|solutionrelative:usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|c:\\users\\aleja\\documents\\ufv\\2ano\\2cuatrimestre\\proyectos 1\\unified\\unified\\api\\api_unified\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|c:\\users\\aleja\\documents\\ufv\\2ano\\2cuatrimestre\\proyectos 1\\unified\\unified\\api\\api_unified\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|c:\\users\\aleja\\documents\\ufv\\2ano\\2cuatrimestre\\proyectos 1\\unified\\unified\\api\\api_unified\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|solutionrelative:appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|c:\\users\\aleja\\documents\\ufv\\2ano\\2cuatrimestre\\proyectos 1\\unified\\unified\\api\\api_unified\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|c:\\users\\aleja\\documents\\ufv\\2ano\\2cuatrimestre\\proyectos 1\\unified\\unified\\api\\api_unified\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{282C1E4F-C83F-4A13-804D-5D4F073D42FB}|API_UniFied.csproj|solutionrelative:controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,53 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Usuario.cs",
-              "RelativeDocumentMoniker": "Usuario.cs",
-              "ToolTip": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Usuario.cs",
-              "RelativeToolTip": "Usuario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T22:49:38.395Z",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAwwCIAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-25T23:27:14.987Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAtAAAAAAAAAA==",
+              "Title": "UsuarioController.cs",
+              "DocumentMoniker": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Controllers\\UsuarioController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsuarioController.cs",
+              "ToolTip": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\Controllers\\UsuarioController.cs",
+              "RelativeToolTip": "Controllers\\UsuarioController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T22:33:03.492Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "AppDbContext.cs",
-              "ToolTip": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\AppDbContext.cs",
-              "RelativeToolTip": "AppDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T22:32:13.985Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\aleja\\Documents\\UFV\\2Ano\\2Cuatrimestre\\Proyectos 1\\unified\\UniFied\\API\\API_UniFied\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-25T21:34:39.043Z",
+              "WhenOpened": "2025-03-25T23:26:58.648Z",
               "EditorCaption": ""
             }
           ]

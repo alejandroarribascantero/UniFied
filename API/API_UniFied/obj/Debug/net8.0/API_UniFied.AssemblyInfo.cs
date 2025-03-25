@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("API_UniFied")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c36ac0a85767479355b7446860e04aa07b1338f0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+718e701e98bdf701f70ed15a6019c4c6a51ad9f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("API_UniFied")]
 [assembly: System.Reflection.AssemblyTitleAttribute("API_UniFied")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

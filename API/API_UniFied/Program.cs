@@ -8,11 +8,8 @@ namespace API_UniFied
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(
-                builder.Configuration.GetConnectionString("DefaultConnection"), // Cadena de conexión
-                new MySqlServerVersion(new Version(8, 0, 23)) // Versión de MySQL (ajusta esto según la versión de tu MySQL)
-    )
-);
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+    
             // Add services to the container.
 
             builder.Services.AddControllers();

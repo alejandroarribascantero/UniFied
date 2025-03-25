@@ -6,7 +6,7 @@ namespace API_UniFied
     {
         public int Id { get; set; }
         public required string Nombre { get; set; }
-        public required string Correo { get; set; }
-        public required string Contraseña { get; set; }
+        public required string Email { get; set; }
+        public required int Edad { get; set; }
     }
 }
