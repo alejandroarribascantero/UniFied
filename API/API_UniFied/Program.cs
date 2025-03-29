@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace API_UniFied
 {
     public class Program
@@ -8,8 +6,12 @@ namespace API_UniFied
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
-    
+            // Agregar la cadena de conexión a la configuración
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // Registrar el servicio Database
+            builder.Services.AddSingleton(new Database(connectionString));
+
             // Add services to the container.
 
             builder.Services.AddControllers();
