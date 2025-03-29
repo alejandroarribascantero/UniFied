@@ -16,11 +16,12 @@ namespace API_UniFied.Controllers
 
         // GET: api/Usuario
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Models.Usuario>>> GetUsuarios()
         {
             try
             {
-                var usuarios = await _database.Consulta<Usuario>("SELECT * FROM Usuarios");
+                string sql = "SELECT * FROM Usuarios";
+                var usuarios = await _database.Consulta<Models.Usuario>(sql);
 
                 if (usuarios == null)
                 {
@@ -31,18 +32,42 @@ namespace API_UniFied.Controllers
             }
             catch (Exception ex)
             {
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+            }
+        }
 
+        // GET: api/Usuario/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Models.Usuario>> GetUsuario(int id)
+        {
+            try
+            {
+                //Modificar el sql para obtener solo los datos que queremos
+                string sql = "SELECT * FROM Usuarios WHERE ID = @Id"; 
+                var usuarios = await _database.Consulta<Models.Usuario>(sql, new { Id = id });
+                var usuario = usuarios.FirstOrDefault();
+
+                if (usuario == null)
+                {
+                    return NotFound($"No se encontró el usuario con ID {id}.");
+                }
+
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
         // POST: api/Usuario/login
         [HttpPost("login")]
-        public async Task<ActionResult<Usuario>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<Models.Usuario>> Login([FromBody] LoginRequest request)
         {
             try
             {
-                var usuarios = await _database.Consulta<Usuario>("SELECT * FROM Usuarios WHERE Email = @Email", new { Email = request.Email });
+                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
+                var usuarios = await _database.Consulta<Models.Usuario>(sql , new { Email = request.Email });
 
                 var usuario = usuarios.FirstOrDefault();
 
@@ -62,12 +87,13 @@ namespace API_UniFied.Controllers
 
         // POST: api/Usuario/register
         [HttpPost("register")]
-        public async Task<ActionResult<Usuario>> Register([FromBody] Usuario nuevoUsuario)
+        public async Task<ActionResult<Models.Usuario>> Register([FromBody] Models.Usuario nuevoUsuario)
         {
             try
             {
+                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
                 // Validar que el email no esté registrado
-                var usuariosExistentes = await _database.Consulta<Usuario>("SELECT * FROM Usuarios WHERE Email = @Email", new { Email = nuevoUsuario.Email });
+                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql , new { Email = nuevoUsuario.Email });
 
                 if (usuariosExistentes.Any())
                 {
@@ -78,8 +104,8 @@ namespace API_UniFied.Controllers
                 nuevoUsuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.Contrasena);
 
                 // Insertar el nuevo usuario en la base de datos
-                var sql = "INSERT INTO Usuarios (Nombre, Email, Edad, Contrasena) VALUES (@Nombre, @Email, @Edad, @Contrasena)";
-                await _database.Insertar(sql, nuevoUsuario);
+                string sqlInsert = "INSERT INTO Usuarios (Nombre, Email, Edad, Contrasena) VALUES (@Nombre, @Email, @Edad, @Contrasena)";
+                await _database.Insertar(sqlInsert, nuevoUsuario);
 
                 return CreatedAtAction(nameof(Login), new { email = nuevoUsuario.Email }, nuevoUsuario);
             }

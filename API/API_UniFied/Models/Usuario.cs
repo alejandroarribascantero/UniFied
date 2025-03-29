@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API_UniFied
+namespace API_UniFied.Models
 {
     public class Usuario
     {
