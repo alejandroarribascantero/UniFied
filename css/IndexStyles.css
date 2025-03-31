@@ -1,0 +1,88 @@
+body {
+    background-image: url('/assets/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.carousel-item {
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-item h2 {
+    font-size: 1.5rem;
+    color: #555;
+}
+
+.btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.card-text {
+    color: #666;
+}
+
+.card img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.rounded-circle {
+    border: 2px solid #007bff;
+}
+
+.container-fluid {
+    padding: 0 15px;
+}
+
+.d-flex.align-items-center.p-3 {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#mainCarousel {
+    height: 100px; 
+}
+
+#mainCarousel .carousel-item {
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mainCarousel h2 {
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.2; 
+}
