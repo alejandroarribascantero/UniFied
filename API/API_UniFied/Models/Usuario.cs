@@ -3,15 +3,17 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API_UniFied.Models
 {
+    public enum Rol
+    {
+        ADMIN,
+        ALUMNO
+    }
     public class Usuario
     {
-        public int Id { get; set; }
-        public required string Nombre { get; set; }
-        public required string Apellidos { get; set; }
-        public required string Email { get; set; }
-        public required string DNI { get; set; }
-        public required string Carrera { get; set; }
-        public required string Contrasena { get; set; }
+        public required int id { get; set; }
+        public required Rol rol { get; set; }
+        public required string password { get; set; }
+        public required string email { get; set; }
 
     }
 }

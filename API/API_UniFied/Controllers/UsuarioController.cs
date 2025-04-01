@@ -72,7 +72,7 @@ namespace API_UniFied.Controllers
                 var usuario = usuarios.FirstOrDefault();
 
                 // Verificar si el usuario existe y si la contraseña es correcta
-                if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Contrasena, usuario.Contrasena))
+                if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Contrasena, usuario.password))
                 {
                     return Unauthorized("Usuario o contraseña incorrectos.");
                 }
@@ -93,7 +93,7 @@ namespace API_UniFied.Controllers
             {
                 string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
                 // Validar que el email no esté registrado
-                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql , new { Email = nuevoUsuario.Email });
+                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql , new { Email = nuevoUsuario.email });
 
                 if (usuariosExistentes.Any())
                 {
@@ -101,13 +101,13 @@ namespace API_UniFied.Controllers
                 }
 
                 // Encriptar la contraseña antes de guardarla
-                nuevoUsuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.Contrasena);
+                nuevoUsuario.password = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.password);
 
                 // Insertar el nuevo usuario en la base de datos
                 string sqlInsert = "INSERT INTO Usuarios (Nombre, Apellidos, Email, DNI, Carrera, Contrasena) VALUES (@Nombre, @Apellidos, @Email, @DNI, @Carrera, @Contrasena)";
                 await _database.Insertar(sqlInsert, nuevoUsuario);
 
-                return CreatedAtAction(nameof(Login), new { email = nuevoUsuario.Email }, nuevoUsuario);
+                return CreatedAtAction(nameof(Login), new { email = nuevoUsuario.email }, nuevoUsuario);
             }
             catch (Exception ex)
             {
