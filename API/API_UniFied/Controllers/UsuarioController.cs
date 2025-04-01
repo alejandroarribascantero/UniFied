@@ -20,7 +20,7 @@ namespace API_UniFied.Controllers
         {
             try
             {
-                string sql = "SELECT * FROM Usuarios";
+                string sql = "SELECT * FROM Usuario";
                 var usuarios = await _database.Consulta<Models.Usuario>(sql);
 
                 if (usuarios == null)
@@ -43,8 +43,8 @@ namespace API_UniFied.Controllers
             try
             {
                 //Modificar el sql para obtener solo los datos que queremos
-                string sql = "SELECT * FROM Usuarios WHERE ID = @Id"; 
-                var usuarios = await _database.Consulta<Models.Usuario>(sql, new { Id = id });
+                string sql = "SELECT * FROM Usuario WHERE id = @id"; 
+                var usuarios = await _database.Consulta<Models.Usuario>(sql, new { id = id });
                 var usuario = usuarios.FirstOrDefault();
 
                 if (usuario == null)
@@ -66,13 +66,13 @@ namespace API_UniFied.Controllers
         {
             try
             {
-                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
-                var usuarios = await _database.Consulta<Models.Usuario>(sql , new { Email = request.Email });
+                string sql = "SELECT * FROM Usuario WHERE email = @email";
+                var usuarios = await _database.Consulta<Models.Usuario>(sql , new { email = request.email });
 
                 var usuario = usuarios.FirstOrDefault();
 
                 // Verificar si el usuario existe y si la contraseña es correcta
-                if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Contrasena, usuario.password))
+                if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.password, usuario.password))
                 {
                     return Unauthorized("Usuario o contraseña incorrectos.");
                 }
@@ -91,20 +91,23 @@ namespace API_UniFied.Controllers
         {
             try
             {
-                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
+                string sql = "SELECT * FROM Usuario WHERE email = @email";
                 // Validar que el email no esté registrado
-                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql , new { Email = nuevoUsuario.email });
+                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql, new { email = nuevoUsuario.email });
 
                 if (usuariosExistentes.Any())
                 {
                     return Conflict("El email ya está registrado.");
                 }
 
+                // Establecer el rol por defecto como ALUMNO
+                nuevoUsuario.rol = Models.Rol.ALUMNO;
+
                 // Encriptar la contraseña antes de guardarla
                 nuevoUsuario.password = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.password);
 
                 // Insertar el nuevo usuario en la base de datos
-                string sqlInsert = "INSERT INTO Usuarios (Nombre, Apellidos, Email, DNI, Carrera, Contrasena) VALUES (@Nombre, @Apellidos, @Email, @DNI, @Carrera, @Contrasena)";
+                string sqlInsert = "INSERT INTO Usuario (email, password, rol) VALUES (@email, @password, @rol)";
                 await _database.Insertar(sqlInsert, nuevoUsuario);
 
                 return CreatedAtAction(nameof(Login), new { email = nuevoUsuario.email }, nuevoUsuario);
@@ -117,8 +120,8 @@ namespace API_UniFied.Controllers
 
         public class LoginRequest
         {
-            public required string Email { get; set; }
-            public required string Contrasena { get; set; }
+            public required string email { get; set; }
+            public required string password { get; set; }
         }
     }
 }
