@@ -68,6 +68,7 @@ body {
 .navbar-nav .nav-link {
     font-size: 1.1rem;
 }
+<<<<<<< HEAD
 
 /* Test personalidad */
 .navbarPersonalidad {
@@ -112,3 +113,12 @@ button > a{
 .botonAnterior:hover {
     background-color: #0d1624af;
 }
+=======
+.register-box{
+    width: 50%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    
+} 
+>>>>>>> 8918323104cac0b99099cffd72299603bd46bf89
