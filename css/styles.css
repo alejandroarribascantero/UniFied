@@ -68,3 +68,47 @@ body {
 .navbar-nav .nav-link {
     font-size: 1.1rem;
 }
+
+/* Test personalidad */
+.navbarPersonalidad {
+    background-color: rgba(32, 32, 123, 0.489);
+    border-bottom: 1px solid #ddd;
+    width: 100vw;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.botonSiguiente {
+    background-color: #132940;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    
+    
+}
+.botonSiguiente:hover {
+    background-color: #0d1624;
+}
+
+.botonAnterior {
+    background-color: #1329409f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    
+    
+}
+button > a{
+    text-decoration: none;
+    color: white;
+}
+.botonAnterior:hover {
+    background-color: #0d1624af;
+}
