@@ -68,3 +68,10 @@ body {
 .navbar-nav .nav-link {
     font-size: 1.1rem;
 }
+.register-box{
+    width: 50%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    
+} 
