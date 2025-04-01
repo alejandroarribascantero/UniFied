@@ -1,0 +1,124 @@
+body {
+    background-image: url('../assets/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+/* NAVBAR */
+/* BARRA COMPLETA */
+.navbar {
+    padding: 20px;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid #ddd;
+}
+
+/* LOGO y TITULO */
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.navbar-brand:hover {
+    color: #ffffff;
+}
+
+.navbar-brand h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ICONOS */
+.icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* OPCIONES NAVBAR */
+.nav-link {
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #0a3e75;
+    border-color: #0d1624;
+    background-color: #ffffff87;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* FIN NAVBAR */
+
+/* CAJAS PERFIL */
+.cajasPerfil {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* titulos de las cajas */
+.cajasPerfil h3 {
+    font-size: 2em;
+    border-bottom: #000000 3px solid;
+    font-weight: bold;
+}
+
+/* todas las imagenes de caja perfil */
+.cajasPerfil img {
+    width: 100px;
+    margin-top: 10px;
+}
+
+/* imagen de personalidad */
+.cajasPerfil .cajaBlanca>img {
+    width: 175px;
+}
+
+/* todos los p de caja perfil */
+.cajasPerfil p {
+    font-size: 1.3em;
+}
+
+/* nombre completo || carrera que esta cursando */
+.cajasPerfil h4 {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+/* FIN CAJAS PERFIL */
+
+
+
+
+/* DE AQUI PARA ABAJO NO TOCAR SIN PREGUNTAR A ARRIBAS */
+/* CLASES POR DEFECTO PARA USAR EN CUALQUIER ZONA DE LA WEB*/
+
+/* CAJAS CON FONDO BLANCO */
+.cajaBlanca {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}

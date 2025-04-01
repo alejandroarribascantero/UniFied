@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     height: 100%;
     margin: 0;
 }
@@ -11,7 +12,12 @@ body {
     margin: 0;
 }
 
-.info-box, .test-box {
+.navbar>.container-fluid>img {
+    width: 50px;
+}
+
+.info-box,
+.test-box {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -23,7 +29,8 @@ body {
     justify-content: space-between;
 }
 
-.info-box h4, .test-box h4 {
+.info-box h4,
+.test-box h4 {
     margin-bottom: 10px;
     font-weight: bold;
 }
@@ -33,7 +40,7 @@ body {
     flex-wrap: wrap;
 }
 
-.equal-height > div {
+.equal-height>div {
     display: flex;
     flex-direction: column;
 }
@@ -95,9 +102,10 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    
-    
+
+
 }
+
 .botonSiguiente:hover {
     background-color: #0d1624;
 }
@@ -110,21 +118,24 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    
-    
+
+
 }
-button > a{
+
+button>a {
     text-decoration: none;
     color: white;
 }
+
 .botonAnterior:hover {
     background-color: #0d1624af;
 }
+
 /**/
-.register-box{
+.register-box {
     width: 50%;
     margin: 0 auto;
     align-items: center;
     justify-content: center;
-    
-} 
+
+}
