@@ -86,28 +86,35 @@ namespace API_UniFied.Controllers
         }
 
         // POST: api/Usuario/register
-        [HttpPost("register")]
-        public async Task<ActionResult<Models.Usuario>> Register([FromBody] Models.Usuario nuevoUsuario)
+        [HttpPost("register-usuario")]
+        public async Task<ActionResult<Models.Usuario>> RegisterUsuario([FromBody] Models.Usuario nuevoUsuario)
         {
             try
             {
-                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
                 // Validar que el email no esté registrado
-                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql , new { Email = nuevoUsuario.email });
+                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
+                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql, new { Email = nuevoUsuario.email });
 
                 if (usuariosExistentes.Any())
                 {
                     return Conflict("El email ya está registrado.");
                 }
 
+                // Validar que la contraseña tenga al menos 8 caracteres
+                if (nuevoUsuario.password.Length < 8)
+                {
+                    return BadRequest("La contraseña debe tener al menos 8 caracteres.");
+                }
+
                 // Encriptar la contraseña antes de guardarla
                 nuevoUsuario.password = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.password);
 
                 // Insertar el nuevo usuario en la base de datos
-                string sqlInsert = "INSERT INTO Usuarios (Nombre, Apellidos, Email, DNI, Carrera, Contrasena) VALUES (@Nombre, @Apellidos, @Email, @DNI, @Carrera, @Contrasena)";
+                string sqlInsert = @"INSERT INTO Usuarios (Email, Password, Rol) 
+                             VALUES (@Email, @Password, @Rol)";
                 await _database.Insertar(sqlInsert, nuevoUsuario);
 
-                return CreatedAtAction(nameof(Login), new { email = nuevoUsuario.email }, nuevoUsuario);
+                return CreatedAtAction(nameof(RegisterUsuario), new { email = nuevoUsuario.email }, nuevoUsuario);
             }
             catch (Exception ex)
             {
