@@ -104,7 +104,7 @@ namespace API_UniFied.Controllers
                 nuevoUsuario.Contrasena = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.Contrasena);
 
                 // Insertar el nuevo usuario en la base de datos
-                string sqlInsert = "INSERT INTO Usuarios (Nombre, Email, Edad, Contrasena) VALUES (@Nombre, @Email, @Edad, @Contrasena)";
+                string sqlInsert = "INSERT INTO Usuarios (Nombre, Apellidos, Email, DNI, Carrera, Contrasena) VALUES (@Nombre, @Apellidos, @Email, @DNI, @Carrera, @Contrasena)";
                 await _database.Insertar(sqlInsert, nuevoUsuario);
 
                 return CreatedAtAction(nameof(Login), new { email = nuevoUsuario.Email }, nuevoUsuario);
