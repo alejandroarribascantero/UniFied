@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BCrypt.Net;
+﻿using BCrypt.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace API_UniFied.Controllers
 {
@@ -43,7 +43,7 @@ namespace API_UniFied.Controllers
             try
             {
                 //Modificar el sql para obtener solo los datos que queremos
-                string sql = "SELECT * FROM Usuarios WHERE ID = @Id"; 
+                string sql = "SELECT * FROM Usuarios WHERE ID = @Id";
                 var usuarios = await _database.Consulta<Models.Usuario>(sql, new { Id = id });
                 var usuario = usuarios.FirstOrDefault();
 
@@ -67,12 +67,18 @@ namespace API_UniFied.Controllers
             try
             {
                 string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
-                var usuarios = await _database.Consulta<Models.Usuario>(sql , new { Email = request.Email });
+                var usuarios = await _database.Consulta<Models.Usuario>(
+                    sql,
+                    new { Email = request.Email }
+                );
 
                 var usuario = usuarios.FirstOrDefault();
 
                 // Verificar si el usuario existe y si la contraseña es correcta
-                if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Contrasena, usuario.password))
+                if (
+                    usuario == null
+                    || !BCrypt.Net.BCrypt.Verify(request.Contrasena, usuario.password)
+                )
                 {
                     return Unauthorized("Usuario o contraseña incorrectos.");
                 }
@@ -85,15 +91,25 @@ namespace API_UniFied.Controllers
             }
         }
 
-        // POST: api/Usuario/register
-        [HttpPost("register-usuario")]
-        public async Task<ActionResult<Models.Usuario>> RegisterUsuario([FromBody] Models.Usuario nuevoUsuario)
+        [HttpPost("registro")]
+        public async Task<ActionResult<Models.Usuario>> RegisterUsuario(
+            [FromBody] RegisterRequest request
+        )
         {
             try
             {
+                // Establecer el rol por defecto como ALUMNO
+                if (request.Usuario.rol == 0)
+                {
+                    request.Usuario.rol = Models.Rol.ALUMNO;
+                }
+
                 // Validar que el email no esté registrado
-                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
-                var usuariosExistentes = await _database.Consulta<Models.Usuario>(sql, new { Email = nuevoUsuario.email });
+                string sql = "SELECT * FROM Usuario WHERE email = @Email";
+                var usuariosExistentes = await _database.Consulta<Models.Usuario>(
+                    sql,
+                    new { Email = request.Usuario.email }
+                );
 
                 if (usuariosExistentes.Any())
                 {
@@ -101,20 +117,51 @@ namespace API_UniFied.Controllers
                 }
 
                 // Validar que la contraseña tenga al menos 8 caracteres
-                if (nuevoUsuario.password.Length < 8)
+                if (request.Usuario.password.Length < 8)
                 {
                     return BadRequest("La contraseña debe tener al menos 8 caracteres.");
                 }
 
                 // Encriptar la contraseña antes de guardarla
-                nuevoUsuario.password = BCrypt.Net.BCrypt.HashPassword(nuevoUsuario.password);
+                request.Usuario.password = BCrypt.Net.BCrypt.HashPassword(request.Usuario.password);
 
                 // Insertar el nuevo usuario en la base de datos
-                string sqlInsert = @"INSERT INTO Usuarios (Email, Password, Rol) 
-                             VALUES (@Email, @Password, @Rol)";
-                await _database.Insertar(sqlInsert, nuevoUsuario);
+                string sqlInsertUsuario =
+                    @"INSERT INTO Usuario (Email, Password, Rol) 
+                                   VALUES (@Email, @Password, @Rol); 
+                                   SELECT LAST_INSERT_ID();";
+                int usuarioId = await _database.Insertar(sqlInsertUsuario, request.Usuario);
 
-                return CreatedAtAction(nameof(RegisterUsuario), new { email = nuevoUsuario.email }, nuevoUsuario);
+                // Si el rol es ALUMNO, registrar en la tabla Alumno
+                if (request.Usuario.rol == Models.Rol.ALUMNO && request.Alumno != null)
+                {
+                    string sqlInsertAlumno =
+                        @"INSERT INTO Alumno (fk_usuario, nombre, apellido1, apellido2, edad, genero, tipo_identificacion, identificacion, eneatipo, estudios, facultad) 
+                                        VALUES (@fk_usuario, @Nombre, @Apellido1, @Apellido2, @Edad, @Genero, @Tipo_Identificacion, @Identificacion, NULL, @Estudios, @Facultad);";
+
+                    await _database.Insertar(
+                        sqlInsertAlumno,
+                        new
+                        {
+                            fk_usuario = usuarioId,
+                            Nombre = request.Alumno.nombre,
+                            Apellido1 = request.Alumno.apellido1,
+                            Apellido2 = request.Alumno.apellido2,
+                            Edad = request.Alumno.edad,
+                            Genero = request.Alumno.genero.ToString(),
+                            Tipo_Identificacion = request.Alumno.tipo_Identificacion.ToString(),
+                            Identificacion = request.Alumno.identificacion,
+                            Estudios = request.Alumno.estudios.ToString(),
+                            Facultad = request.Alumno.facultad.ToString(),
+                        }
+                    );
+                }
+
+                return CreatedAtAction(
+                    nameof(RegisterUsuario),
+                    new { email = request.Usuario.email },
+                    request.Usuario
+                );
             }
             catch (Exception ex)
             {
@@ -126,6 +173,13 @@ namespace API_UniFied.Controllers
         {
             public required string Email { get; set; }
             public required string Contrasena { get; set; }
+        }
+
+        public class RegisterRequest
+        {
+            public required Models.Usuario Usuario { get; set; }
+
+            public Models.Alumno? Alumno { get; set; }
         }
     }
 }
