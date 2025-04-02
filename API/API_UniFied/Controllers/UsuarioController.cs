@@ -136,8 +136,8 @@ namespace API_UniFied.Controllers
                 if (request.Usuario.rol == Models.Rol.ALUMNO && request.Alumno != null)
                 {
                     string sqlInsertAlumno =
-                        @"INSERT INTO Alumno (fk_usuario, nombre, apellido1, apellido2, edad, genero, tipo_identificacion, identificacion, eneatipo, estudios, facultad) 
-                                        VALUES (@fk_usuario, @Nombre, @Apellido1, @Apellido2, @Edad, @Genero, @Tipo_Identificacion, @Identificacion, NULL, @Estudios, @Facultad);";
+                        @"INSERT INTO Alumno (fk_usuario, nombre, apellido1, apellido2, fecha_nacimiento, genero, tipo_identificacion, identificacion, eneatipo, estudios, facultad) 
+                                        VALUES (@fk_usuario, @Nombre, @Apellido1, @Apellido2, @Fecha_naciemiento, @Genero, @Tipo_Identificacion, @Identificacion, NULL, @Estudios, @Facultad);";
 
                     await _database.Insertar(
                         sqlInsertAlumno,
@@ -147,7 +147,7 @@ namespace API_UniFied.Controllers
                             Nombre = request.Alumno.nombre,
                             Apellido1 = request.Alumno.apellido1,
                             Apellido2 = request.Alumno.apellido2,
-                            Edad = request.Alumno.edad,
+                            Fecha_naciemiento = request.Alumno.fecha_nacimiento,
                             Genero = request.Alumno.genero.ToString(),
                             Tipo_Identificacion = request.Alumno.tipo_Identificacion.ToString(),
                             Identificacion = request.Alumno.identificacion,

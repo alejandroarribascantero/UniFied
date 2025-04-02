@@ -67,7 +67,7 @@ namespace API_UniFied.Models
 
         public required string apellido2 { get; set; }
 
-        public required int edad { get; set; }
+        public required DateTime fecha_nacimiento { get; set; }
 
         public required string identificacion { get; set; }
     }
