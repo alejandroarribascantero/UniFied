@@ -12,7 +12,7 @@ namespace API_UniFied.Models
     public class Usuario
     {
 
-        public required int id { get; set; }
+        public int id { get; set; }
 
         public required Rol rol { get; set; }
 

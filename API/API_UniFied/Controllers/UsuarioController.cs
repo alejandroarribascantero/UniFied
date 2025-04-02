@@ -68,10 +68,10 @@ namespace API_UniFied.Controllers
             try
             {
 
-                string sql = "SELECT * FROM Usuarios WHERE Email = @Email";
+                string sql = "SELECT * FROM Usuario WHERE Email = @Email";
                 var usuarios = await _database.Consulta<Models.Usuario>(
                     sql,
-                    new { Email = request.Email }
+                    new { Email = request.email }
                 );
 
                 var usuario = usuarios.FirstOrDefault();
@@ -80,7 +80,7 @@ namespace API_UniFied.Controllers
 
                 if (
                     usuario == null
-                    || !BCrypt.Net.BCrypt.Verify(request.Contrasena, usuario.password)
+                    || !BCrypt.Net.BCrypt.Verify(request.password, usuario.password)
                 )
 
                 {
@@ -132,8 +132,8 @@ namespace API_UniFied.Controllers
                 // Insertar el nuevo usuario en la base de datos
                 string sqlInsertUsuario =
                     @"INSERT INTO Usuario (Email, Password, Rol) 
-                                   VALUES (@Email, @Password, @Rol); 
-                                   SELECT LAST_INSERT_ID();";
+                                    VALUES (@Email, @Password, @Rol); 
+                                    SELECT LAST_INSERT_ID();";
                 int usuarioId = await _database.Insertar(sqlInsertUsuario, request.Usuario);
 
                 // Si el rol es ALUMNO, registrar en la tabla Alumno
@@ -160,12 +160,8 @@ namespace API_UniFied.Controllers
                         }
                     );
                 }
-
-                return CreatedAtAction(
-                    nameof(RegisterUsuario),
-                    new { email = request.Usuario.email },
-                    request.Usuario
-                );
+                //Cambiar lo que devuele
+                return Ok("Usuario creado con exito");
             }
             catch (Exception ex)
             {
