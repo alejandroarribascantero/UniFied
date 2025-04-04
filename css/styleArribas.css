@@ -162,6 +162,15 @@ body {
 }
 /* FIN CAJAS PERFIL */
 
+.iniciaSesion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: #ddd;
+    border-radius: 10px;
+    color: rgb(6, 6, 57);
+}
 
 
 
