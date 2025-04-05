@@ -92,7 +92,7 @@ CREATE TABLE Peticion (
 
 -- 6. Tabla CONTESTACION
 --    Para guardar las contestaciones a una petición.
---    ‘contestaciones’ se define como TEXT para poder
+--    'contestaciones' se define como TEXT para poder
 --    almacenar una lista/array serializada, o texto libre.
 CREATE TABLE Contestacion (
     id_contestacion INT AUTO_INCREMENT PRIMARY KEY,
@@ -109,25 +109,37 @@ USE ejemplo_diagrama;
 -- 6. Tabla PREGUNTAS
 CREATE TABLE Preguntas (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    pregunta    VARCHAR(200) NOT NULL
+    pregunta    VARCHAR(200) NOT NULL,
+    opcion_a    VARCHAR(200) NOT NULL,
+    opcion_b    VARCHAR(200) NOT NULL,
+    opcion_c    VARCHAR(200) NOT NULL,
+    opcion_d    VARCHAR(200) NOT NULL,
+    eneatipo_a  INT NOT NULL,  -- Eneatipo asociado a la opción A
+    eneatipo_b  INT NOT NULL,  -- Eneatipo asociado a la opción B
+    eneatipo_c  INT NOT NULL,  -- Eneatipo asociado a la opción C
+    eneatipo_d  INT NOT NULL   -- Eneatipo asociado a la opción D
 );
 
 -- 7. Tabla RESPUESTAS
 CREATE TABLE Respuestas (
-    id   INT AUTO_INCREMENT PRIMARY KEY,
-    respuesta      VARCHAR(200) NOT NULL,
-    fk_id_pregunta INT NOT NULL,
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    fk_usuario      INT NOT NULL,
+    fk_pregunta     INT NOT NULL,
+    respuesta       ENUM('A', 'B', 'C', 'D') NOT NULL,
+    fecha_respuesta DATETIME DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT fk_pregunta
-      FOREIGN KEY (fk_id_pregunta)
-      REFERENCES Preguntas(id)
-      -- ON DELETE CASCADE  -- Descomenta si quieres que al borrar la pregunta se borren respuestas
-      -- ON UPDATE CASCADE
+    CONSTRAINT fk_respuesta_usuario
+        FOREIGN KEY (fk_usuario)
+        REFERENCES Usuario(id),
+
+    CONSTRAINT fk_respuesta_pregunta
+        FOREIGN KEY (fk_pregunta)
+        REFERENCES Preguntas(id)
 );
 
 -- 8. Tabla USUARIO_PREGUNTAS
 --    Relaciona a un usuario con una pregunta y 
---    registra la “opción” o “respuesta” elegida.
+--    registra la "opción" o "respuesta" elegida.
 CREATE TABLE Usuario_Preguntas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     opcion_respuesta     INT,               -- por ej. un índice de respuesta
@@ -142,11 +154,3 @@ CREATE TABLE Usuario_Preguntas (
       FOREIGN KEY (fk_usuario)
       REFERENCES Usuario(id)
 );
-
-INSERT INTO Usuario (rol, password, email)
-VALUES
-  ('ADMIN', 'adminPass',   'admin@example.com'),
-  ('ALUMNO', 'alumnoPass1', 'alumno1@example.com'),
-  ('ALUMNO', 'alumnoPass2', 'alumno2@example.com');
-
--- Ajusta motores, colaciones y restricciones ON DELETE/UPDATE según tu preferencia.

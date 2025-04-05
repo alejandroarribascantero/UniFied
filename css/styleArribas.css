@@ -1,3 +1,6 @@
+/* ============================= */
+/*      ESTILOS GENERALES       */
+/* ============================= */
 body {
     background-image: url('../assets/fondo.jpg');
     background-size: cover;
@@ -6,8 +9,11 @@ body {
     padding: 0;
 }
 
-/* NAVBAR */
-/* BARRA COMPLETA */
+/* ============================= */
+/*            NAVBAR            */
+/* ============================= */
+
+/* Barra de navegación */
 .navbar {
     padding: 20px;
     z-index: 1000;
@@ -15,7 +21,7 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
-/* LOGO y TITULO */
+/* Logo y título */
 .logo {
     width: 50px;
     height: 50px;
@@ -29,7 +35,8 @@ body {
     color: #ffffff;
 }
 
-.navbar-brand:hover {
+.navbar-brand:hover,
+.navbar-brand h1 {
     color: #ffffff;
 }
 
@@ -37,10 +44,9 @@ body {
     margin: 0;
     font-size: 2.5rem;
     font-weight: bold;
-    color: #ffffff;
 }
 
-/* ICONOS */
+/* Iconos dentro del navbar */
 .icon {
     width: 25px;
     height: 25px;
@@ -48,7 +54,7 @@ body {
     vertical-align: middle;
 }
 
-/* OPCIONES NAVBAR */
+/* Opciones del menú */
 .nav-link {
     display: flex;
     margin-right: 20px;
@@ -67,9 +73,11 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* FIN NAVBAR */
+/* ============================= */
+/*        CAJAS DE PERFIL       */
+/* ============================= */
 
-/* CAJAS PERFIL */
+/* Contenedor de cajas */
 .cajasPerfil {
     display: flex;
     justify-content: center;
@@ -77,28 +85,36 @@ body {
     flex-wrap: wrap;
 }
 
-/* titulos de las cajas */
+/* Títulos */
 .cajasPerfil h3 {
     font-size: 2em;
-    border-bottom: #000000 3px solid;
+    border-bottom: 3px solid #000;
     font-weight: bold;
 }
 
-/* todas las imagenes de caja perfil */
+.cajasPerfil h4 {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+/* Imágenes dentro de cajas */
 .cajasPerfil img {
     width: 100px;
     margin-top: 10px;
 }
 
-/* imagen de personalidad */
-.cajasPerfil .cajaBlanca>img {
+.cajasPerfil .cajaBlanca > img {
     width: 175px;
 }
 
-/* todos los p de caja perfil */
+/* Textos */
 .cajasPerfil p {
     font-size: 1.3em;
 }
+
+/* ============================= */
+/*  CAJA: INFORMACIÓN PERSONAL  */
+/* ============================= */
 
 .cajaInfoPersonal {
     background-image: url('../assets/fondoUsuario.webp');
@@ -112,6 +128,14 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     min-height: 400px;
+}
+
+.cajaInfoPersonal::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    z-index: 1;
 }
 
 .cajaInfoPersonal .card-body {
@@ -133,17 +157,7 @@ body {
     backdrop-filter: blur(5px);
 }
 
-.cajaInfoPersonal::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.3);
-    z-index: 1;
-}
-
+/* Imagen del usuario */
 .cajaInfoPersonal .rounded-circle {
     width: 150px;
     height: 150px;
@@ -159,6 +173,7 @@ body {
     border-color: #0d1624;
 }
 
+/* Textos */
 .cajaInfoPersonal .card-title {
     color: #0a3e75;
     font-size: 1.5em;
@@ -174,6 +189,7 @@ body {
     line-height: 1.4;
 }
 
+/* Efecto hover */
 .cajaInfoPersonal:hover {
     cursor: pointer;
     transform: translateY(-5px);
@@ -181,11 +197,9 @@ body {
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* nombre completo || carrera que esta cursando */
-.cajasPerfil h4 {
-    font-size: 1.6em;
-    font-weight: bold;
-}
+/* ============================= */
+/*      EVENTOS Y SUGERENCIAS   */
+/* ============================= */
 
 .cajaEventosSugerencias {
     background-color: rgba(255, 255, 255, 0.7);
@@ -202,6 +216,15 @@ body {
     padding: 20px;
 }
 
+.cajaEventosSugerencias .card-title {
+    font-size: 1.8em;
+    color: #0a3e75;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-bottom: 2px solid #0a3e75;
+    padding-bottom: 10px;
+}
+
 .contenedorSugerencias {
     display: flex;
     gap: 20px;
@@ -212,29 +235,27 @@ body {
     scrollbar-color: #0a3e75 transparent;
 }
 
+/* Scroll personalizado */
 .contenedorSugerencias::-webkit-scrollbar {
     height: 8px;
 }
-
 .contenedorSugerencias::-webkit-scrollbar-track {
     background: transparent;
 }
-
 .contenedorSugerencias::-webkit-scrollbar-thumb {
     background-color: #0a3e75;
     border-radius: 20px;
 }
 
+/* Tarjetas de sugerencias */
 .cardSugerencia {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
     padding: 20px;
-    margin: 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: 100%;
     border: 1px solid rgba(0, 0, 0, 0.1);
     flex: 0 0 250px;
 }
@@ -272,6 +293,7 @@ body {
     line-height: 1.4;
 }
 
+/* Botón conectar */
 .btnConectar {
     background-color: #0a3e75;
     color: white;
@@ -293,21 +315,11 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.cajaEventosSugerencias .card-title {
-    font-size: 1.8em;
-    color: #0a3e75;
-    margin-bottom: 20px;
-    font-weight: bold;
-    border-bottom: 2px solid #0a3e75;
-    padding-bottom: 10px;
-}
-/* FIN CAJAS PERFIL */
+/* ============================= */
+/*     UTILIDADES GENERALES     */
+/* ============================= */
 
-
-/* DE AQUI PARA ABAJO NO TOCAR SIN PREGUNTAR A ARRIBAS */
-/* CLASES POR DEFECTO PARA USAR EN CUALQUIER ZONA DE LA WEB*/
-
-/* CAJAS CON FONDO BLANCO */
+/* Caja blanca común */
 .cajaBlanca {
     margin-top: 20px;
     background-color: white;
@@ -316,10 +328,15 @@ body {
     text-align: center;
 }
 
-.divPrincipal{
+/* Contenedor principal */
+.divPrincipal {
     margin-top: 20px;
     min-height: 80vh;
 }
+
+/* ============================= */
+/*          RESPONSIVE          */
+/* ============================= */
 
 @media (max-width: 768px) {
     .contenedorSugerencias {
@@ -399,6 +416,10 @@ body {
     }
 }
 
+/* ============================= */
+/*        TARJETA ACTIVIDAD     */
+/* ============================= */
+
 .cardActividad {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
@@ -408,7 +429,6 @@ body {
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    height: 100%;
     border: 1px solid rgba(0, 0, 0, 0.1);
     flex: 0 0 250px;
 }

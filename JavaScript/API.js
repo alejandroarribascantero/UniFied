@@ -1,59 +1,52 @@
-API_URL = 'https://localhost:7221/api/';
+// URL base de la API
+const API_URL = 'https://localhost:7221/api/';
 
-// Función para registrar un nuevo usuario
+// ------------------------ FUNCIONES AUXILIARES DE CONVERSIÓN ------------------------ //
+
+const convertirGenero = (genero) => {
+    const valor = { "Masculino": 0, "Femenino": 1 }[genero];
+    if (valor === undefined) throw new Error("Género no válido");
+    return valor;
+};
+
+const convertirTipoIdentificacion = (tipo) => {
+    const valor = { "DNI": 0, "NIE": 1, "PASAPORTE": 2 }[tipo];
+    if (valor === undefined) throw new Error("Tipo de identificación no válido");
+    return valor;
+};
+
+const convertirEstudios = (estudios) => {
+    const valor = { "GRADO": 0, "MASTER": 1, "DOCTORADO": 2 }[estudios];
+    if (valor === undefined) throw new Error("Nivel de estudios no válido");
+    return valor;
+};
+
+const convertirFacultad = (facultad) => {
+    const valor = {
+        "DERECHO_EMPRESA_GOBIERNO": 0,
+        "CIENCIAS_COMUNICACION": 1,
+        "EDUCACION_PSICOLOGIA": 2,
+        "CIENCIAS_EXPERIMENTALES": 3,
+        "CIENCIAS_SALUD": 4,
+        "POLITECNICA_SUPERIOR": 5,
+        "MEDICINA": 6
+    }[facultad];
+    if (valor === undefined) throw new Error("Facultad no válida");
+    return valor;
+};
+
+// ------------------------ GESTIÓN DE USUARIO ------------------------ //
+
 function registrarUsuario(usuario) {
-    // Función para convertir género a número
-    const convertirGenero = (genero) => {
-        switch(genero) {
-            case "Masculino": return 0;
-            case "Femenino": return 1;
-            default: return 0;
-        }
-    };
-
-    // Función para convertir tipo de identificación a número
-    const convertirTipoIdentificacion = (tipo) => {
-        switch(tipo) {
-            case "DNI": return 0;
-            case "NIE": return 1;
-            case "PASAPORTE": return 2;
-            default: return 0;
-        }
-    };
-
-    // Función para convertir estudios a número
-    const convertirEstudios = (estudios) => {
-        switch(estudios) {
-            case "GRADO": return 0;
-            case "MASTER": return 1;
-            case "DOCTORADO": return 2;
-            default: return 0;
-        }
-    };
-
-    // Función para convertir facultad a número
-    const convertirFacultad = (facultad) => {
-        switch(facultad) {
-            case "DERECHO_EMPRESA_GOBIERNO": return 0;
-            case "CIENCIAS_COMUNICACION": return 1;
-            case "EDUCACION_PSICOLOGIA": return 2;
-            case "CIENCIAS_EXPERIMENTALES": return 3;
-            case "CIENCIAS_SALUD": return 4;
-            case "POLITECNICA_SUPERIOR": return 5;
-            case "MEDICINA": return 6;
-            default: return 0;
-        }
-    };
-
     return $.ajax({
-        url: API_URL + "usuario/registro",
+        url: `${API_URL}usuario/registro`,
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
             Usuario: {
                 email: usuario.email,
                 password: usuario.password,
-                rol: 1 // Rol por defecto
+                rol: 1 // rol profesor por defecto
             },
             Alumno: {
                 nombre: usuario.nombre,
@@ -65,222 +58,325 @@ function registrarUsuario(usuario) {
                 identificacion: usuario.identificacion,
                 estudios: convertirEstudios(usuario.estudios),
                 facultad: convertirFacultad(usuario.facultad),
-                eneatipo: 1 // Valor por defecto
+                eneatipo: 1 // valor por defecto
             }
         })
     });
 }
 
-// Manejar el envío del formulario de registro
-$(document).ready(function() {
-    $("#registroForm").on("submit", function(e) {
-        e.preventDefault();
-        
-        // Obtener los valores del formulario
-        const email = $("#email").val();
-        const password = $("#password").val();
-        const confirmPassword = $("#confirmPassword").val();
-        const nombre = $("#nombre").val();
-        const apellido1 = $("#apellido1").val();
-        const apellido2 = $("#apellido2").val();
-        const fechaNacimiento = $("#fechaNacimiento").val();
-        const genero = $("#genero").val();
-        const tipoIdentificacion = $("#tipoIdentificacion").val();
-        const identificacion = $("#identificacion").val();
-        const estudios = $("#estudios").val();
-        const facultad = $("#facultad").val();
-
-        // Validaciones básicas
-        if (!email || !password || !confirmPassword || !nombre || !apellido1 || !fechaNacimiento || 
-            !genero || !tipoIdentificacion || !identificacion || !estudios || !facultad) {
-            alert("Por favor, complete todos los campos obligatorios");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            alert("Las contraseñas no coinciden");
-            return;
-        }
-
-        // Crear objeto usuario
-        const nuevoUsuario = {
-            email: email,
-            password: password,
-            nombre: nombre,
-            apellido1: apellido1,
-            apellido2: apellido2,
-            fechaNacimiento: fechaNacimiento,
-            genero: genero,
-            tipoIdentificacion: tipoIdentificacion,
-            identificacion: identificacion,
-            estudios: estudios,
-            facultad: facultad
-        };
-
-        // Enviar registro
-        registrarUsuario(nuevoUsuario)
-            .done(function(response) {
-                alert("Registro exitoso");
-                window.location.href = "login.html";
-            })
-            .fail(function(error) {
-                if (error.status === 409) {
-                    alert("El email ya está registrado");
-                } else {
-                    alert("Error en el registro. Por favor, intente nuevamente.");
-                }
-            });
-    });
-});
-
-// Ejemplo de uso:
-// const nuevoUsuario = {
-//     nombre: "Juan",
-//     apellidos: "Pérez García",
-//     email: "juan@ejemplo.com",
-//     dni: "12345678A",
-//     carrera: "Ingeniería Informática",
-//     contrasena: "contraseña123"
-// };
-// 
-// registrarUsuario(nuevoUsuario)
-//     .done(function(response) {
-//         console.log("Usuario registrado exitosamente:", response);
-//     })
-//     .fail(function(error) {
-//         console.error("Error en el registro:", error);
-//     });
-
-$.get(API_URL + "usuario", function (response) {
-    console.log(response);
-    $("#resultado").text(JSON.stringify(response));
-}).fail(function (error) {
-    console.error("Error en la petición:", error);
-});
-
-// Función para iniciar sesión
 function loginUsuario(credenciales) {
     return $.ajax({
-        url: API_URL + "usuario/login",
+        url: `${API_URL}usuario/login`,
         type: "POST",
         contentType: "application/json",
-        data: JSON.stringify({
-            email: credenciales.email,
-            password: credenciales.password
-        })
+        data: JSON.stringify(credenciales)
     });
 }
 
-// Función para proteger las rutas
-function protegerRuta() {
-    const usuario = getUsuarioActual();
-    const paginaActual = window.location.pathname.split('/').pop();
-    
-    // Páginas que no requieren sesión
-    const paginasPublicas = ['login.html', 'registro.html'];
-    
-    // Si no hay usuario y la página no es pública, redirigir a login
-    if (!usuario && !paginasPublicas.includes(paginaActual)) {
-        window.location.href = "../pages/login.html";
-        return;
-    }
-    
-    // Si hay usuario y está en login/registro, redirigir según su rol
-    if (usuario && paginasPublicas.includes(paginaActual)) {
-        if (usuario.rol === 0) { // ALUMNO
-            window.location.href = "../index.html";
-        } else if (usuario.rol === 1) { // PROFESOR
-            window.location.href = "../pages/profesor.html";
-        } else if (usuario.rol === 2) { // ADMIN
-            window.location.href = "../pages/admin.html";
-        }
-        return;
-    }
-}
-
-// Ejecutar la protección de rutas al cargar la página
-$(document).ready(function() {
-    protegerRuta();
-    
-    // Resto del código existente...
-});
-
-// Función para verificar si hay una sesión activa
-function verificarSesion() {
-    const usuario = getUsuarioActual();
-    if (usuario) {
-        // Redirigir según el rol
-        if (usuario.rol === 0) { // ALUMNO
-            window.location.href = "../index.html";
-        } else if (usuario.rol === 1) { // PROFESOR
-            window.location.href = "../pages/profesor.html";
-        } else if (usuario.rol === 2) { // ADMIN
-            window.location.href = "../pages/admin.html";
-        }
-    }
-}
-
-// Función para cerrar sesión
 function cerrarSesion() {
-    sessionStorage.removeItem('usuario');
+    sessionStorage.removeItem("usuario");
     window.location.href = "../pages/login.html";
 }
 
-// Función para obtener el usuario actual
 function getUsuarioActual() {
-    const usuario = sessionStorage.getItem('usuario');
+    const usuario = sessionStorage.getItem("usuario");
     return usuario ? JSON.parse(usuario) : null;
 }
 
-// Manejar el envío del formulario de login
-$(document).ready(function() {
-    // Verificar si hay una sesión activa al cargar la página
-    if (window.location.pathname.includes('login.html')) {
-        verificarSesion();
-    }
+function redirigirPorRol(rol) {
+    const rutas = ["../index.html", "../pages/profesor.html", "../pages/admin.html"];
+    window.location.href = rutas[rol] ?? "../pages/login.html";
+}
 
+// ------------------------ FUNCIONES DE AUTENTICACIÓN Y PROTECCIÓN ------------------------ //
+
+function protegerRuta() {
+    const usuario = getUsuarioActual();
+    const paginaActual = window.location.pathname.split("/").pop();
+    const paginasPublicas = ["login.html", "registro.html"];
+
+    if (!usuario && !paginasPublicas.includes(paginaActual)) {
+        window.location.href = "../pages/login.html";
+    } else if (usuario && paginasPublicas.includes(paginaActual)) {
+        redirigirPorRol(usuario.rol);
+    }
+}
+
+function verificarSesion() {
+    const usuario = getUsuarioActual();
+    if (usuario) redirigirPorRol(usuario.rol);
+}
+
+// ------------------------ EVENTOS DE FORMULARIOS ------------------------ //
+
+function manejarRegistro() {
+    $("#registroForm").on("submit", function(e) {
+        e.preventDefault();
+
+        try {
+            const usuario = {
+                email: $("#email").val(),
+                password: $("#password").val(),
+                nombre: $("#nombre").val(),
+                apellido1: $("#apellido1").val(),
+                apellido2: $("#apellido2").val(),
+                fechaNacimiento: $("#fechaNacimiento").val(),
+                genero: convertirGenero($("#genero").val()),
+                tipoIdentificacion: convertirTipoIdentificacion($("#tipoIdentificacion").val()),
+                identificacion: $("#identificacion").val(),
+                estudios: convertirEstudios($("#estudios").val()),
+                facultad: convertirFacultad($("#facultad").val())
+            };
+
+            const confirmPassword = $("#confirmPassword").val();
+
+            if (Object.values(usuario).includes("") || confirmPassword === "") {
+                alert("Por favor, complete todos los campos obligatorios");
+                return;
+            }
+
+            if (usuario.password !== confirmPassword) {
+                alert("Las contraseñas no coinciden");
+                return;
+            }
+
+            registrarUsuario(usuario)
+                .done(() => {
+                    alert("Registro exitoso");
+                    window.location.href = "login.html";
+                })
+                .fail((error) => {
+                    alert(error.status === 409 ? "El email ya está registrado" : "Error en el registro. Intente nuevamente.");
+                });
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+}
+
+function manejarLogin() {
     $("#loginForm").on("submit", function(e) {
         e.preventDefault();
-        
-        // Obtener los valores del formulario
-        const email = $("#email").val();
-        const password = $("#loginPassword").val();
 
-        // Validaciones básicas
-        if (!email || !password) {
+        const credenciales = {
+            email: $("#email").val(),
+            password: $("#loginPassword").val()
+        };
+
+        if (!credenciales.email || !credenciales.password) {
             alert("Por favor, complete todos los campos");
             return;
         }
 
-        // Crear objeto con las credenciales
-        const credenciales = {
-            email: email,
-            password: password
-        };
-
-        // Intentar login
         loginUsuario(credenciales)
-            .done(function(response) {
-                // Guardar el usuario en se'0'000ssionStorage
-                sessionStorage.setItem('usuario', JSON.stringify(response));
+            .done((response) => {
+                sessionStorage.setItem("usuario", JSON.stringify(response));
                 alert("Inicio de sesión exitoso");
-                // Redirigir según el rol del usuario
-                if (response.rol === 0) { // ALUMNO
-                    window.location.href = "../index.html";
-                } else if (response.rol === 1) { // PROFESOR
-                    window.location.href = "profesor.html";
-                } else if (response.rol === 2) { // ADMIN
-                    window.location.href = "admin.html";
+                redirigirPorRol(response.rol);
+            })
+            .fail((error) => {
+                alert(error.status === 401 ? "Email o contraseña incorrectos" : "Error en el inicio de sesión. Intente nuevamente.");
+            });
+    });
+}
+
+// ------------------------ TEST DE PERSONALIDAD ------------------------ //
+
+// Función para obtener las preguntas del test
+function obtenerPreguntasTest() {
+    return $.ajax({
+        url: `${API_URL}testpersonalidad/preguntas`,
+        type: "GET"
+    });
+}
+
+let preguntasActuales = [];
+let paginaActual = 0;
+const preguntasPorPagina = 5;
+
+function mostrarPreguntas(preguntas) {
+    preguntasActuales = preguntas;
+    paginaActual = 0;
+    mostrarPaginaActual();
+}
+
+function mostrarPaginaActual() {
+    const container = document.getElementById('preguntasContainer');
+    container.innerHTML = ''; // Limpiar el contenedor
+
+    // Calcular el rango de preguntas a mostrar
+    const inicio = paginaActual * preguntasPorPagina;
+    const fin = Math.min(inicio + preguntasPorPagina, preguntasActuales.length);
+
+    // Mostrar las preguntas de la página actual
+    for (let i = inicio; i < fin; i++) {
+        const pregunta = preguntasActuales[i];
+        const preguntaDiv = document.createElement('div');
+        preguntaDiv.className = 'mb-3 p-3 bg-white shadow rounded';
+        
+        preguntaDiv.innerHTML = `
+            <p class="fw-bold">${i + 1}. ${pregunta.pregunta}</p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="A" required>
+                <label class="form-check-label">${pregunta.opcionA}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="B" required>
+                <label class="form-check-label">${pregunta.opcionB}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="C" required>
+                <label class="form-check-label">${pregunta.opcionC}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="D" required>
+                <label class="form-check-label">${pregunta.opcionD}</label>
+            </div>
+        `;
+        
+        container.appendChild(preguntaDiv);
+    }
+
+    // Añadir botones de navegación
+    const navegacionDiv = document.createElement('div');
+    navegacionDiv.className = 'd-flex justify-content-between mt-4';
+    
+    const esUltimaPagina = fin >= preguntasActuales.length;
+    
+    navegacionDiv.innerHTML = `
+        <button class="btn btn-primary ${paginaActual === 0 ? 'disabled' : ''}" 
+                onclick="cambiarPagina(${paginaActual - 1})" 
+                ${paginaActual === 0 ? 'disabled' : ''}>
+            Anterior
+        </button>
+        <span class="align-self-center">Página ${paginaActual + 1} de ${Math.ceil(preguntasActuales.length / preguntasPorPagina)}</span>
+        ${esUltimaPagina 
+            ? '<button class="btn btn-success" onclick="enviarTest()">Enviar</button>'
+            : `<button class="btn btn-primary" onclick="cambiarPagina(${paginaActual + 1})">Siguiente</button>`
+        }
+    `;
+    
+    container.appendChild(navegacionDiv);
+}
+
+function cambiarPagina(nuevaPagina) {
+    // Guardar las respuestas actuales
+    const respuestasActuales = {};
+    const inputs = document.querySelectorAll('input[type="radio"]:checked');
+    inputs.forEach(input => {
+        respuestasActuales[input.name] = input.value;
+    });
+
+    // Cambiar de página
+    paginaActual = nuevaPagina;
+    mostrarPaginaActual();
+
+    // Restaurar las respuestas
+    Object.entries(respuestasActuales).forEach(([name, value]) => {
+        const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (input) {
+            input.checked = true;
+        }
+    });
+}
+
+function enviarTest() {
+    const form = document.getElementById('testForm');
+    if (!form) return;
+    
+    const respuestas = [];
+    const inputs = document.querySelectorAll('input[type="radio"]:checked');
+    
+    if (inputs.length !== 20) {
+        alert('Por favor, responde todas las preguntas.');
+        return;
+    }
+
+    inputs.forEach(input => {
+        const preguntaId = input.name.replace('pregunta', '');
+        respuestas.push({
+            PreguntaId: parseInt(preguntaId),
+            Respuesta: input.value
+        });
+    });
+
+    enviarRespuestasTest(respuestas)
+        .done(function(resultado) {
+            if (resultado.eneatipo) {
+                alert(`Tu eneatipo es: ${resultado.eneatipo}`);
+                window.location.href = '../index.html';
+            }
+        })
+        .fail(function(error) {
+            console.error('Error al enviar las respuestas:', error);
+            alert('Error al enviar las respuestas. Por favor, inténtalo de nuevo.');
+        });
+}
+
+function manejarTestPersonalidad() {
+    const form = document.getElementById('testForm');
+    if (!form) return;
+
+    // Cargar preguntas al cargar la página
+    obtenerPreguntasTest()
+        .done(function(preguntas) {
+            mostrarPreguntas(preguntas);
+        })
+        .fail(function(error) {
+            console.error('Error al cargar las preguntas:', error);
+            alert('Error al cargar las preguntas. Por favor, recarga la página.');
+        });
+
+    // Manejar el envío del formulario
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const respuestas = [];
+        const inputs = form.querySelectorAll('input[type="radio"]:checked');
+        
+        if (inputs.length !== 20) {
+            alert('Por favor, responde todas las preguntas.');
+            return;
+        }
+
+        inputs.forEach(input => {
+            const preguntaId = input.name.replace('pregunta', '');
+            respuestas.push({
+                PreguntaId: parseInt(preguntaId),
+                Respuesta: input.value
+            });
+        });
+
+        enviarRespuestasTest(respuestas)
+            .done(function(resultado) {
+                if (resultado.eneatipo) {
+                    alert(`Tu eneatipo es: ${resultado.eneatipo}`);
+                    // Redirigir a la página principal o mostrar resultados
+                    window.location.href = '../index.html';
                 }
             })
             .fail(function(error) {
-                if (error.status === 401) {
-                    alert("Email o contraseña incorrectos");
-                } else {
-                    alert("Error en el inicio de sesión. Por favor, intente nuevamente.");
-                }
+                console.error('Error al enviar las respuestas:', error);
+                alert('Error al enviar las respuestas. Por favor, inténtalo de nuevo.');
             });
     });
+}
+
+// ------------------------ INICIALIZACIÓN DE EVENTOS ------------------------ //
+
+$(document).ready(function() {
+    protegerRuta();
+
+    if (window.location.pathname.includes("login.html")) {
+        verificarSesion();
+        manejarLogin();
+    }
+
+    if (window.location.pathname.includes("registro.html")) {
+        manejarRegistro();
+    }
+
+    if (window.location.pathname.includes("testPersonalidad.html")) {
+        manejarTestPersonalidad();
+    }
 });
-
-
