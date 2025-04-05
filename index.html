@@ -29,17 +29,18 @@
                             Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/perfil.html"><img src="assets/person.svg" alt="Perfil" class="icon">
+                        <a class="nav-link" href="pages/perfil.html"><img src="assets/person.svg" alt="Perfil"
+                                class="icon">
                             Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><img src="assets/search-heart.svg" alt="Buscar Amigos"
+                        <a class="nav-link" href="#"><img src="assets/search-heart.svg" alt="Amigos"
                                 class="icon">
-                            Buscar Amigos</a>
+                            Amigos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><img src="assets/search.svg" alt="Charlas/Eventos" class="icon">
-                            Charlas/Eventos</a>
+                        <a class="nav-link" href="#"><img src="assets/search.svg" alt="Eventos" class="icon">
+                            Eventos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#"><img src="assets/gear.svg" alt="Configuración" class="icon">
@@ -53,36 +54,83 @@
             </div>
         </div>
     </nav>
-    <div class="container-fluid divPrincipal row">
-        <div class="col-md-3 mb-4">
-            <div class="card cajaInfoPersonal">
-                <div class="card-body text-center">
-                    <img src="assets/rajoy.png" alt="Foto de Perfil" class="rounded-circle mb-3">
-                    <div>
-                        <h5 class="card-title">Información Personal</h5>
-                        <p class="card-text">Aquí puedes poner información personal del usuario.</p>
+    <div class="container-fluid py-4">
+        <div class="row g-4">
+            <div class="col-12 col-md-12 col-lg-3">
+                <div class="card cajaInfoPersonal h-100">
+                    <div class="card-body text-center">
+                        <img src="assets/rajoy.png" alt="Foto de Perfil" class="rounded-circle">
+                        <div>
+                            <h5 class="card-title">Información Personal</h5>
+                            <p class="card-text">Aquí puedes poner información personal del usuario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-9">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="card cajaEventosSugerencias">
+                            <div class="card-body">
+                                <h5 class="card-title">Actividades:</h5>
+                                <div class="contenedorSugerencias">
+                                    <div class="card cardActividad">
+                                        <div class="card-title">Taller de Arte</div>
+                                        <img src="assets/logo.png" class="card-img-top" />
+                                        <div class="card-info">
+                                            <p>Fecha: 20/03/2024</p>
+                                            <p>Hora: 17:00</p>
+                                            <p>Lugar: Sala Arte</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card cajaEventosSugerencias">
+                            <div class="card-body">
+                                <h5 class="card-title">Sugerencias:</h5>
+                                <div class="contenedorSugerencias">
+                                    <div class="card cardSugerencia">
+                                        <div class="card-title">PEDRO SANCHEZ</div>
+                                        <img src="assets/rajoy.png" class="card-img-top" />
+                                        <button class="btnConectar">Conectar</button>
+                                    </div>
+                                    <div class="card cardSugerencia">
+                                        <div class="card-title">PEDRO SANCHEZ</div>
+                                        <img src="assets/rajoy.png" class="card-img-top" />
+                                        <button class="btnConectar">Conectar</button>
+                                    </div>
+                                    <div class="card cardSugerencia">
+                                        <div class="card-title">PEDRO SANCHEZ</div>
+                                        <img src="assets/rajoy.png" class="card-img-top" />
+                                        <button class="btnConectar">Conectar</button>
+                                    </div>
+                                    <div class="card cardSugerencia">
+                                        <div class="card-title">PEDRO SANCHEZ</div>
+                                        <img src="assets/rajoy.png" class="card-img-top" />
+                                        <button class="btnConectar">Conectar</button>
+                                    </div>
+                                    <div class="card cardSugerencia">
+                                        <div class="card-title">PEDRO SANCHEZ</div>
+                                        <img src="assets/rajoy.png" class="card-img-top" />
+                                        <button class="btnConectar">Conectar</button>
+                                    </div>
+                                    <div class="card cardSugerencia">
+                                        <div class="card-title">PEDRO SANCHEZ</div>
+                                        <img src="assets/rajoy.png" class="card-img-top" />
+                                        <button class="btnConectar">Conectar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-4">
-            <div class="card cajaEventosSugerencias">
-                <div class="card-body">
-                    <h5 class="card-title">Este Mes:</h5>
-                    <p class="card-text">Eventos asistidos:</p>
-                    <p class="card-text">Eventos por asistir:</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card cajaEventosSugerencias">
-                <div class="card-body">
-                    <h5 class="card-title">Sugerencias:</h5>
-                    <p class="card-text">Personas que te pueden interesar según tu personalidad.</p>
-                    <p class="card-text">Personas que asistirán a eventos que vas, que podrías conocer:</p>
-                </div>
-            </div>
-        </div>
+    </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

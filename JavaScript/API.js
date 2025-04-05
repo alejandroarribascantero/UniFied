@@ -2,17 +2,71 @@ API_URL = 'https://localhost:7221/api/';
 
 // Función para registrar un nuevo usuario
 function registrarUsuario(usuario) {
+    // Función para convertir género a número
+    const convertirGenero = (genero) => {
+        switch(genero) {
+            case "Masculino": return 0;
+            case "Femenino": return 1;
+            default: return 0;
+        }
+    };
+
+    // Función para convertir tipo de identificación a número
+    const convertirTipoIdentificacion = (tipo) => {
+        switch(tipo) {
+            case "DNI": return 0;
+            case "NIE": return 1;
+            case "PASAPORTE": return 2;
+            default: return 0;
+        }
+    };
+
+    // Función para convertir estudios a número
+    const convertirEstudios = (estudios) => {
+        switch(estudios) {
+            case "GRADO": return 0;
+            case "MASTER": return 1;
+            case "DOCTORADO": return 2;
+            default: return 0;
+        }
+    };
+
+    // Función para convertir facultad a número
+    const convertirFacultad = (facultad) => {
+        switch(facultad) {
+            case "DERECHO_EMPRESA_GOBIERNO": return 0;
+            case "CIENCIAS_COMUNICACION": return 1;
+            case "EDUCACION_PSICOLOGIA": return 2;
+            case "CIENCIAS_EXPERIMENTALES": return 3;
+            case "CIENCIAS_SALUD": return 4;
+            case "POLITECNICA_SUPERIOR": return 5;
+            case "MEDICINA": return 6;
+            default: return 0;
+        }
+    };
+
     return $.ajax({
-        url: API_URL + "usuario/register",
+        url: API_URL + "usuario/registro",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({
-            nombre: usuario.nombre,
-            apellidos: usuario.apellidos,
-            email: usuario.email,
-            dni: usuario.dni,
-            carrera: usuario.carrera,
-            contrasena: usuario.contrasena
+            Usuario: {
+                email: usuario.email,
+                password: usuario.password,
+                rol: 1 // Rol por defecto
+            },
+            Alumno: {
+                nombre: usuario.nombre,
+                apellido1: usuario.apellido1,
+                apellido2: usuario.apellido2,
+                fecha_nacimiento: usuario.fechaNacimiento,
+                genero: convertirGenero(usuario.genero),
+                tipo_Identificacion: convertirTipoIdentificacion(usuario.tipoIdentificacion),
+                identificacion: usuario.identificacion,
+                estudios: convertirEstudios(usuario.estudios),
+                facultad: convertirFacultad(usuario.facultad),
+                eneatipo: 1 // Valor por defecto
+            }
         })
     });
 }
@@ -23,41 +77,51 @@ $(document).ready(function() {
         e.preventDefault();
         
         // Obtener los valores del formulario
-        const nombre = $("#Nombre").val();
-        const apellidos = $("#Apellidos").val();
-        const email = $("#Emaiil").val(); // Nota: hay un typo en el ID del HTML
-        const dni = $("#DNI").val();
-        const carrera = $("#Carrera").val();
-        const contrasena = $("#Contrasena").val();
-        const repiteContrasena = $("#RepiteContrasena").val();
+        const email = $("#email").val();
+        const password = $("#password").val();
+        const confirmPassword = $("#confirmPassword").val();
+        const nombre = $("#nombre").val();
+        const apellido1 = $("#apellido1").val();
+        const apellido2 = $("#apellido2").val();
+        const fechaNacimiento = $("#fechaNacimiento").val();
+        const genero = $("#genero").val();
+        const tipoIdentificacion = $("#tipoIdentificacion").val();
+        const identificacion = $("#identificacion").val();
+        const estudios = $("#estudios").val();
+        const facultad = $("#facultad").val();
 
         // Validaciones básicas
-        if (!nombre || !apellidos || !email || !dni || !carrera || !contrasena || !repiteContrasena) {
-            alert("Por favor, complete todos los campos");
+        if (!email || !password || !confirmPassword || !nombre || !apellido1 || !fechaNacimiento || 
+            !genero || !tipoIdentificacion || !identificacion || !estudios || !facultad) {
+            alert("Por favor, complete todos los campos obligatorios");
             return;
         }
 
-        if (contrasena !== repiteContrasena) {
+        if (password !== confirmPassword) {
             alert("Las contraseñas no coinciden");
             return;
         }
 
         // Crear objeto usuario
         const nuevoUsuario = {
-            nombre: nombre,
-            apellidos: apellidos,
             email: email,
-            dni: dni,
-            carrera: carrera,
-            contrasena: contrasena
+            password: password,
+            nombre: nombre,
+            apellido1: apellido1,
+            apellido2: apellido2,
+            fechaNacimiento: fechaNacimiento,
+            genero: genero,
+            tipoIdentificacion: tipoIdentificacion,
+            identificacion: identificacion,
+            estudios: estudios,
+            facultad: facultad
         };
 
         // Enviar registro
         registrarUsuario(nuevoUsuario)
             .done(function(response) {
                 alert("Registro exitoso");
-                // Redirigir a la página de test de personalidad
-                window.location.href = "test.html";
+                window.location.href = "login.html";
             })
             .fail(function(error) {
                 if (error.status === 409) {

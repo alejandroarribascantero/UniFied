@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/styleArribas.css">
 </head>
 
-<body>
+<body >
     <!-- Encabezado -->
     <div class="header d-flex align-items-center text-white p-3">
         <img src="../assets/logo.png" alt="Logo" class="logo me-2" height="100px">
@@ -18,24 +18,24 @@
     </div>
 
     <!-- Formulario de Registro -->
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="text-center">Registro de Usuario</h3>
+                        <h3 class="text-center">Login de Usuario</h3>
                     </div>
                     <div class="card-body">
-                        <form id="registroForm">
+                        <form id="loginForm">
                             <!-- Datos de Usuario -->
                             <h4 class="mb-3">Datos de Usuario</h4>
-                            <div class="mb-4">
+                            <div class="mb-1">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="email" required>
                                 </div>
                                 <div class="row">
-                                    <div class="mb-3 col-md-6">
+                                    <div class="mb-3 col-md-12">
                                         <label for="password" class="form-label">Contraseña</label>
                                         <div class="input-group">
                                             <input type="password" class="form-control" id="password" required
@@ -46,24 +46,10 @@
                                         </div>
                                         <div class="form-text">La contraseña debe tener al menos 8 caracteres.</div>
                                     </div>
-                                    <div class="mb-3 col-md-6">
-                                        <label for="confirmPassword" class="form-label">Repite la Contraseña</label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" id="confirmPassword" required
-                                                minlength="8">
-                                            <button class="btn btn-outline-secondary" type="button"
-                                                id="toggleConfirmPassword">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
-                                        <div class="form-text" id="passwordMatch"></div>
-                                    </div>
                                 </div>
                             </div>
-
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="iniciaSesion">¿No tienes cuenta? Registrarse</button>
+                            <div class="">
+                                <a href="">¿No tienes cuenta? Registrarte</a>
                             </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary">Iniciar sesión</button>
