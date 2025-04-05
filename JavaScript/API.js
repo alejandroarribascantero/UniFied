@@ -158,4 +158,129 @@ $.get(API_URL + "usuario", function (response) {
     console.error("Error en la petición:", error);
 });
 
+// Función para iniciar sesión
+function loginUsuario(credenciales) {
+    return $.ajax({
+        url: API_URL + "usuario/login",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            email: credenciales.email,
+            password: credenciales.password
+        })
+    });
+}
+
+// Función para proteger las rutas
+function protegerRuta() {
+    const usuario = getUsuarioActual();
+    const paginaActual = window.location.pathname.split('/').pop();
+    
+    // Páginas que no requieren sesión
+    const paginasPublicas = ['login.html', 'registro.html'];
+    
+    // Si no hay usuario y la página no es pública, redirigir a login
+    if (!usuario && !paginasPublicas.includes(paginaActual)) {
+        window.location.href = "../pages/login.html";
+        return;
+    }
+    
+    // Si hay usuario y está en login/registro, redirigir según su rol
+    if (usuario && paginasPublicas.includes(paginaActual)) {
+        if (usuario.rol === 0) { // ALUMNO
+            window.location.href = "../index.html";
+        } else if (usuario.rol === 1) { // PROFESOR
+            window.location.href = "../pages/profesor.html";
+        } else if (usuario.rol === 2) { // ADMIN
+            window.location.href = "../pages/admin.html";
+        }
+        return;
+    }
+}
+
+// Ejecutar la protección de rutas al cargar la página
+$(document).ready(function() {
+    protegerRuta();
+    
+    // Resto del código existente...
+});
+
+// Función para verificar si hay una sesión activa
+function verificarSesion() {
+    const usuario = getUsuarioActual();
+    if (usuario) {
+        // Redirigir según el rol
+        if (usuario.rol === 0) { // ALUMNO
+            window.location.href = "../index.html";
+        } else if (usuario.rol === 1) { // PROFESOR
+            window.location.href = "../pages/profesor.html";
+        } else if (usuario.rol === 2) { // ADMIN
+            window.location.href = "../pages/admin.html";
+        }
+    }
+}
+
+// Función para cerrar sesión
+function cerrarSesion() {
+    sessionStorage.removeItem('usuario');
+    window.location.href = "../pages/login.html";
+}
+
+// Función para obtener el usuario actual
+function getUsuarioActual() {
+    const usuario = sessionStorage.getItem('usuario');
+    return usuario ? JSON.parse(usuario) : null;
+}
+
+// Manejar el envío del formulario de login
+$(document).ready(function() {
+    // Verificar si hay una sesión activa al cargar la página
+    if (window.location.pathname.includes('login.html')) {
+        verificarSesion();
+    }
+
+    $("#loginForm").on("submit", function(e) {
+        e.preventDefault();
+        
+        // Obtener los valores del formulario
+        const email = $("#email").val();
+        const password = $("#loginPassword").val();
+
+        // Validaciones básicas
+        if (!email || !password) {
+            alert("Por favor, complete todos los campos");
+            return;
+        }
+
+        // Crear objeto con las credenciales
+        const credenciales = {
+            email: email,
+            password: password
+        };
+
+        // Intentar login
+        loginUsuario(credenciales)
+            .done(function(response) {
+                // Guardar el usuario en se'0'000ssionStorage
+                sessionStorage.setItem('usuario', JSON.stringify(response));
+                alert("Inicio de sesión exitoso");
+                // Redirigir según el rol del usuario
+                if (response.rol === 0) { // ALUMNO
+                    window.location.href = "../index.html";
+                } else if (response.rol === 1) { // PROFESOR
+                    window.location.href = "profesor.html";
+                } else if (response.rol === 2) { // ADMIN
+                    window.location.href = "admin.html";
+                }
+            })
+            .fail(function(error) {
+                if (error.status === 401) {
+                    alert("Email o contraseña incorrectos");
+                } else {
+                    alert("Error en el inicio de sesión. Por favor, intente nuevamente.");
+                }
+            });
+    });
+});
+
 
