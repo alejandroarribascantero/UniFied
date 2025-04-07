@@ -63,7 +63,7 @@ function registrarUsuario(usuario) {
                 apellido1: usuario.apellido1,
                 apellido2: usuario.apellido2,
                 fecha_nacimiento: usuario.fechaNacimiento,
-                genero: usuario.genero, // Ya viene convertido de la función convertirGenero
+                genero: usuario.genero,
                 tipo_Identificacion: usuario.tipoIdentificacion,
                 identificacion: usuario.identificacion,
                 estudios: usuario.estudios,
@@ -94,8 +94,7 @@ function getUsuarioActual() {
 }
 
 function redirigirPorRol(rol) {
-    const rutas = ["../index.html", "../pages/profesor.html", "../pages/admin.html"];
-    window.location.href = rutas[rol] ?? "../pages/login.html";
+    window.location.href = "../index.html";
 }
 
 // ------------------------ FUNCIONES DE AUTENTICACIÓN Y PROTECCIÓN ------------------------ //
@@ -105,16 +104,43 @@ function protegerRuta() {
     const paginaActual = window.location.pathname.split("/").pop();
     const paginasPublicas = ["login.html", "registro.html"];
 
+    // Si no hay usuario y no está en página pública, redirigir a login
     if (!usuario && !paginasPublicas.includes(paginaActual)) {
         window.location.href = "../pages/login.html";
-    } else if (usuario && paginasPublicas.includes(paginaActual)) {
-        redirigirPorRol(usuario.rol);
+        return; // Importante: salir de la función después de redirigir
+    }
+
+    // Si hay usuario
+    if (usuario) {
+        // Si no tiene eneatipo y no está en el test
+        if (!usuario.eneatipo && paginaActual !== "testPersonalidad.html") {
+            window.location.href = "../pages/testPersonalidad.html";
+            return;
+        }
+        
+        // Si tiene eneatipo y está en el test, redirigir según rol
+        if (usuario.eneatipo && paginaActual === "testPersonalidad.html") {
+            redirigirPorRol(usuario.rol);
+            return;
+        }
+        
+        // Si está en páginas públicas, redirigir según rol
+        if (paginasPublicas.includes(paginaActual)) {
+            redirigirPorRol(usuario.rol);
+            return;
+        }
     }
 }
 
 function verificarSesion() {
     const usuario = getUsuarioActual();
-    if (usuario) redirigirPorRol(usuario.rol);
+    const paginaActual = window.location.pathname.split("/").pop();
+    const paginasPublicas = ["login.html", "registro.html"];
+    
+    // Solo redirigir si hay usuario y no está en una página pública
+    if (usuario && !paginasPublicas.includes(paginaActual)) {
+        redirigirPorRol(usuario.rol);
+    }
 }
 
 // ------------------------ EVENTOS DE FORMULARIOS ------------------------ //
@@ -141,25 +167,27 @@ function manejarRegistro() {
             const confirmPassword = $("#confirmPassword").val();
 
             if (Object.values(usuario).includes("") || confirmPassword === "") {
-                alert("Por favor, complete todos los campos obligatorios");
+                console.log("Por favor, complete todos los campos obligatorios");
                 return;
             }
 
             if (usuario.password !== confirmPassword) {
-                alert("Las contraseñas no coinciden");
+                console.log("Las contraseñas no coinciden");
                 return;
             }
 
             registrarUsuario(usuario)
                 .done(() => {
-                    alert("Registro exitoso");
-                    window.location.href = "login.html";
+                    console.log("Registro exitoso");
+                    window.location.href = "testPersonalidad.html";
                 })
                 .fail((error) => {
-                    alert(error.status === 409 ? "El email ya está registrado" : "Error en el registro. Intente nuevamente.");
+                    console.error('Error en el registro:', error);
+                    console.log(error.status === 409 ? "El email ya está registrado" : "Error en el registro. Intente nuevamente.");
                 });
         } catch (error) {
-            alert(error.message);
+            console.error('Error en el registro:', error);
+            console.log(error.message);
         }
     });
 }
@@ -174,18 +202,27 @@ function manejarLogin() {
         };
 
         if (!credenciales.email || !credenciales.password) {
-            alert("Por favor, complete todos los campos");
+            console.log("Por favor, complete todos los campos");
             return;
         }
 
         loginUsuario(credenciales)
             .done((response) => {
                 sessionStorage.setItem("usuario", JSON.stringify(response));
-                alert("Inicio de sesión exitoso");
-                redirigirPorRol(response.rol);
+                console.log("Inicio de sesión exitoso");
+                
+                // Verificar si el usuario tiene eneatipo asignado
+                if (!response.eneatipo) {
+                    // Si no tiene eneatipo, redirigir al test
+                    window.location.href = "testPersonalidad.html";
+                } else {
+                    // Si tiene eneatipo, redirigir según su rol
+                    redirigirPorRol(response.rol);
+                }
             })
             .fail((error) => {
-                alert(error.status === 401 ? "Email o contraseña incorrectos" : "Error en el inicio de sesión. Intente nuevamente.");
+                console.error('Error al iniciar sesión:', error);
+                console.log(error.status === 401 ? "Email o contraseña incorrectos" : "Error en el inicio de sesión. Intente nuevamente.");
             });
     });
 }
@@ -218,34 +255,58 @@ function mostrarPaginaActual() {
     const inicio = paginaActual * preguntasPorPagina;
     const fin = Math.min(inicio + preguntasPorPagina, preguntasActuales.length);
 
+    // Cargar respuestas guardadas del sessionStorage
+    const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestasTest') || '{}');
+
     // Mostrar las preguntas de la página actual
     for (let i = inicio; i < fin; i++) {
         const pregunta = preguntasActuales[i];
         const preguntaDiv = document.createElement('div');
         preguntaDiv.className = 'mb-3 p-3 bg-white shadow rounded';
         
+        // Obtener la respuesta guardada para esta pregunta
+        const respuestaGuardada = respuestasGuardadas[`pregunta${pregunta.id}`];
+        
         preguntaDiv.innerHTML = `
             <p class="fw-bold">${i + 1}. ${pregunta.pregunta}</p>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="A" required>
-                <label class="form-check-label">${pregunta.opcionA}</label>
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" id="pregunta${pregunta.id}_A" value="A" required ${respuestaGuardada === 'A' ? 'checked' : ''}>
+                <label class="form-check-label" for="pregunta${pregunta.id}_A">${pregunta.opcionA}</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="B" required>
-                <label class="form-check-label">${pregunta.opcionB}</label>
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" id="pregunta${pregunta.id}_B" value="B" required ${respuestaGuardada === 'B' ? 'checked' : ''}>
+                <label class="form-check-label" for="pregunta${pregunta.id}_B">${pregunta.opcionB}</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="C" required>
-                <label class="form-check-label">${pregunta.opcionC}</label>
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" id="pregunta${pregunta.id}_C" value="C" required ${respuestaGuardada === 'C' ? 'checked' : ''}>
+                <label class="form-check-label" for="pregunta${pregunta.id}_C">${pregunta.opcionC}</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" value="D" required>
-                <label class="form-check-label">${pregunta.opcionD}</label>
+                <input class="form-check-input" type="radio" name="pregunta${pregunta.id}" id="pregunta${pregunta.id}_D" value="D" required ${respuestaGuardada === 'D' ? 'checked' : ''}>
+                <label class="form-check-label" for="pregunta${pregunta.id}_D">${pregunta.opcionD}</label>
             </div>
         `;
         
         container.appendChild(preguntaDiv);
     }
+
+    // Añadir evento de cambio a todos los radio buttons
+    const radioButtons = container.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Obtener las respuestas actuales
+            const respuestasActuales = {};
+            const inputs = document.querySelectorAll('input[type="radio"]:checked');
+            inputs.forEach(input => {
+                respuestasActuales[input.name] = input.value;
+            });
+
+            // Combinar con respuestas existentes
+            const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestasTest') || '{}');
+            const respuestasCombinadas = { ...respuestasGuardadas, ...respuestasActuales };
+            sessionStorage.setItem('respuestasTest', JSON.stringify(respuestasCombinadas));
+        });
+    });
 
     // Añadir botones de navegación
     const navegacionDiv = document.createElement('div');
@@ -270,23 +331,25 @@ function mostrarPaginaActual() {
 }
 
 function cambiarPagina(nuevaPagina) {
-    // Guardar las respuestas actuales
-    const respuestasActuales = {};
-    const inputs = document.querySelectorAll('input[type="radio"]:checked');
-    inputs.forEach(input => {
-        respuestasActuales[input.name] = input.value;
-    });
-
     // Cambiar de página
     paginaActual = nuevaPagina;
     mostrarPaginaActual();
+}
 
-    // Restaurar las respuestas
-    Object.entries(respuestasActuales).forEach(([name, value]) => {
-        const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
-        if (input) {
-            input.checked = true;
-        }
+function enviarRespuestasTest(respuestas) {
+    const usuario = getUsuarioActual();
+    if (!usuario) {
+        return Promise.reject(new Error("Usuario no autenticado"));
+    }
+
+    return $.ajax({
+        url: `${API_URL}testpersonalidad/respuestas`,
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            Email: usuario.email,
+            Respuestas: respuestas
+        })
     });
 }
 
@@ -294,32 +357,50 @@ function enviarTest() {
     const form = document.getElementById('testForm');
     if (!form) return;
     
+    // Obtener todas las respuestas del sessionStorage
+    const respuestasGuardadas = JSON.parse(sessionStorage.getItem('respuestasTest') || '{}');
     const respuestas = [];
-    const inputs = document.querySelectorAll('input[type="radio"]:checked');
     
-    if (inputs.length !== 20) {
-        alert('Por favor, responde todas las preguntas.');
+    // Verificar que todas las preguntas tengan respuesta
+    let todasRespondidas = true;
+    for (let i = 0; i < preguntasActuales.length; i++) {
+        const pregunta = preguntasActuales[i];
+        const respuesta = respuestasGuardadas[`pregunta${pregunta.id}`];
+        
+        if (!respuesta) {
+            todasRespondidas = false;
+            break;
+        }
+        
+        respuestas.push({
+            PreguntaId: pregunta.id,
+            _Respuesta: respuesta
+        });
+    }
+
+    if (!todasRespondidas) {
+        console.log('Por favor, responde todas las preguntas.');
         return;
     }
 
-    inputs.forEach(input => {
-        const preguntaId = input.name.replace('pregunta', '');
-        respuestas.push({
-            PreguntaId: parseInt(preguntaId),
-            Respuesta: input.value
-        });
-    });
+    // Limpiar el sessionStorage después de enviar el test
+    sessionStorage.removeItem('respuestasTest');
 
     enviarRespuestasTest(respuestas)
         .done(function(resultado) {
             if (resultado.eneatipo) {
-                alert(`Tu eneatipo es: ${resultado.eneatipo}`);
+                // Actualizar el eneatipo en el usuario actual
+                const usuario = getUsuarioActual();
+                usuario.eneatipo = resultado.eneatipo;
+                sessionStorage.setItem("usuario", JSON.stringify(usuario));
+                
+                console.log(`Tu eneatipo es: ${resultado.eneatipo}`);
                 window.location.href = '../index.html';
             }
         })
         .fail(function(error) {
             console.error('Error al enviar las respuestas:', error);
-            alert('Error al enviar las respuestas. Por favor, inténtalo de nuevo.');
+            console.log('Error al enviar las respuestas. Por favor, inténtalo de nuevo.');
         });
 }
 
@@ -327,14 +408,22 @@ function manejarTestPersonalidad() {
     const form = document.getElementById('testForm');
     if (!form) return;
 
-    // Cargar preguntas al cargar la página
+    // Verificar si el usuario ya tiene eneatipo
+    const usuario = getUsuarioActual();
+    if (usuario && usuario.eneatipo) {
+        // Solo redirigir si tiene eneatipo
+        redirigirPorRol(usuario.rol);
+        return;
+    }
+
+    // Si no tiene eneatipo, cargar el test
     obtenerPreguntasTest()
         .done(function(preguntas) {
             mostrarPreguntas(preguntas);
         })
         .fail(function(error) {
             console.error('Error al cargar las preguntas:', error);
-            alert('Error al cargar las preguntas. Por favor, recarga la página.');
+            console.log('Error al cargar las preguntas. Por favor, recarga la página.');
         });
 
     // Manejar el envío del formulario
@@ -345,7 +434,7 @@ function manejarTestPersonalidad() {
         const inputs = form.querySelectorAll('input[type="radio"]:checked');
         
         if (inputs.length !== 20) {
-            alert('Por favor, responde todas las preguntas.');
+            console.log('Por favor, responde todas las preguntas.');
             return;
         }
 
@@ -353,21 +442,20 @@ function manejarTestPersonalidad() {
             const preguntaId = input.name.replace('pregunta', '');
             respuestas.push({
                 PreguntaId: parseInt(preguntaId),
-                Respuesta: input.value
+                _Respuesta: input.value
             });
         });
 
         enviarRespuestasTest(respuestas)
             .done(function(resultado) {
                 if (resultado.eneatipo) {
-                    alert(`Tu eneatipo es: ${resultado.eneatipo}`);
-                    // Redirigir a la página principal o mostrar resultados
+                    console.log(`Tu eneatipo es: ${resultado.eneatipo}`);
                     window.location.href = '../index.html';
                 }
             })
             .fail(function(error) {
                 console.error('Error al enviar las respuestas:', error);
-                alert('Error al enviar las respuestas. Por favor, inténtalo de nuevo.');
+                console.log('Error al enviar las respuestas. Por favor, inténtalo de nuevo.');
             });
     });
 }

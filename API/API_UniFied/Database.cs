@@ -27,7 +27,17 @@ public class Database
         using (var connection = new MySqlConnection(_connectionString))
         {
             await connection.OpenAsync();
-            return await connection.ExecuteAsync(sql, parameters);
+            
+            // Si la consulta contiene SELECT LAST_INSERT_ID(), usamos QuerySingleAsync
+            if (sql.Contains("SELECT LAST_INSERT_ID()"))
+            {
+                return await connection.QuerySingleAsync<int>(sql, parameters);
+            }
+            // En caso contrario, usamos ExecuteAsync
+            else
+            {
+                return await connection.ExecuteAsync(sql, parameters);
+            }
         }
     }
 }

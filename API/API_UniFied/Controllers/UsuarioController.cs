@@ -63,31 +63,34 @@ namespace API_UniFied.Controllers
 
         // POST: api/Usuario/login
         [HttpPost("login")]
-        public async Task<ActionResult<Models.Usuario>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<dynamic>> Login([FromBody] LoginRequest request)
         {
             try
             {
-
-                string sql = "SELECT * FROM Usuario WHERE Email = @Email";
-                var usuarios = await _database.Consulta<Models.Usuario>(
+                string sql = @"
+                    SELECT u.*, a.eneatipo 
+                    FROM Usuario u 
+                    LEFT JOIN Alumno a ON u.id = a.fk_usuario 
+                    WHERE u.Email = @Email";
+                
+                var usuarios = await _database.Consulta<dynamic>(
                     sql,
                     new { Email = request.email }
                 );
 
                 var usuario = usuarios.FirstOrDefault();
 
-                // Verificar si el usuario existe y si la contraseña es correcta
-
-                if (
-                    usuario == null
-                    || !BCrypt.Net.BCrypt.Verify(request.password, usuario.password)
-                )
-
+                if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.password, usuario.password))
                 {
                     return Unauthorized("Usuario o contraseña incorrectos.");
                 }
 
-                return Ok(usuario);
+                return Ok(new {
+                    id = usuario.id,
+                    email = usuario.email,
+                    rol = usuario.rol,
+                    eneatipo = usuario.eneatipo
+                });
             }
             catch (Exception ex)
             {
@@ -141,7 +144,7 @@ namespace API_UniFied.Controllers
                 {
                     string sqlInsertAlumno =
                         @"INSERT INTO Alumno (fk_usuario, nombre, apellido1, apellido2, fecha_nacimiento, genero, tipo_identificacion, identificacion, eneatipo, estudios, facultad) 
-                                        VALUES (@fk_usuario, @Nombre, @Apellido1, @Apellido2, @Fecha_naciemiento, @Genero, @Tipo_Identificacion, @Identificacion, NULL, @Estudios, @Facultad);";
+                                        VALUES (@fk_usuario, @Nombre, @Apellido1, @Apellido2, @Fecha_nacimiento, @Genero, @Tipo_Identificacion, @Identificacion, NULL, @Estudios, @Facultad);";
 
                     await _database.Insertar(
                         sqlInsertAlumno,
@@ -151,12 +154,12 @@ namespace API_UniFied.Controllers
                             Nombre = request.Alumno.nombre,
                             Apellido1 = request.Alumno.apellido1,
                             Apellido2 = request.Alumno.apellido2,
-                            Fecha_naciemiento = request.Alumno.fecha_nacimiento,
+                            Fecha_nacimiento = request.Alumno.fecha_nacimiento,
                             Genero = request.Alumno.genero.ToString(),
-                            Tipo_Identificacion = request.Alumno.tipo_Identificacion.ToString(),
+                            Tipo_Identificacion = request.Alumno.tipo_Identificacion,
                             Identificacion = request.Alumno.identificacion,
                             Estudios = request.Alumno.estudios.ToString(),
-                            Facultad = request.Alumno.facultad.ToString(),
+                            Facultad = request.Alumno.facultad.ToString()
                         }
                     );
                 }
