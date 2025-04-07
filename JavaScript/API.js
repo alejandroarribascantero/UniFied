@@ -4,8 +4,18 @@ const API_URL = 'https://localhost:7221/api/';
 // ------------------------ FUNCIONES AUXILIARES DE CONVERSIÓN ------------------------ //
 
 const convertirGenero = (genero) => {
-    const valor = { "Masculino": 0, "Femenino": 1 }[genero];
-    if (valor === undefined) throw new Error("Género no válido");
+    console.log(genero)
+    const valor = { 
+        "Masculino": 0, 
+        "Femenino": 1,
+        "masculino": 0,
+        "femenino": 1
+    }[genero];
+    
+    if (valor === undefined) {
+        console.error("Género no válido:", genero);
+        throw new Error("Género no válido");
+    }
     return valor;
 };
 
@@ -53,11 +63,11 @@ function registrarUsuario(usuario) {
                 apellido1: usuario.apellido1,
                 apellido2: usuario.apellido2,
                 fecha_nacimiento: usuario.fechaNacimiento,
-                genero: convertirGenero(usuario.genero),
-                tipo_Identificacion: convertirTipoIdentificacion(usuario.tipoIdentificacion),
+                genero: usuario.genero, // Ya viene convertido de la función convertirGenero
+                tipo_Identificacion: usuario.tipoIdentificacion,
                 identificacion: usuario.identificacion,
-                estudios: convertirEstudios(usuario.estudios),
-                facultad: convertirFacultad(usuario.facultad),
+                estudios: usuario.estudios,
+                facultad: usuario.facultad,
                 eneatipo: 1 // valor por defecto
             }
         })
@@ -112,7 +122,7 @@ function verificarSesion() {
 function manejarRegistro() {
     $("#registroForm").on("submit", function(e) {
         e.preventDefault();
-
+        
         try {
             const usuario = {
                 email: $("#email").val(),
