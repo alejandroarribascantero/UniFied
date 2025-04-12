@@ -48,6 +48,7 @@ const convertirFacultad = (facultad) => {
 // ------------------------ GESTIÓN DE USUARIO ------------------------ //
 
 function registrarUsuario(usuario) {
+    alert("Registro exitoso");
     return $.ajax({
         url: `${API_URL}usuario/registro`,
         type: "POST",
@@ -63,11 +64,11 @@ function registrarUsuario(usuario) {
                 apellido1: usuario.apellido1,
                 apellido2: usuario.apellido2,
                 fecha_nacimiento: usuario.fechaNacimiento,
-                genero: usuario.genero,
-                tipo_Identificacion: usuario.tipoIdentificacion,
+                genero: 1,
+                tipo_Identificacion: 1,
                 identificacion: usuario.identificacion,
-                estudios: usuario.estudios,
-                facultad: usuario.facultad,
+                estudios: 1,
+                facultad: 1,
                 eneatipo: 1 // valor por defecto
             }
         })
@@ -75,6 +76,7 @@ function registrarUsuario(usuario) {
 }
 
 function loginUsuario(credenciales) {
+    alert("Login exitoso");
     return $.ajax({
         url: `${API_URL}usuario/login`,
         type: "POST",
@@ -394,7 +396,7 @@ function enviarTest() {
                 usuario.eneatipo = resultado.eneatipo;
                 sessionStorage.setItem("usuario", JSON.stringify(usuario));
                 
-                console.log(`Tu eneatipo es: ${resultado.eneatipo}`);
+                alert(`Tu eneatipo es: ${resultado.eneatipo}`);
                 window.location.href = '../index.html';
             }
         })
