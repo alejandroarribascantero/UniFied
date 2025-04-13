@@ -220,6 +220,9 @@ public partial class AppDbContext : DbContext
                 .HasPrecision(2)
                 .HasColumnName("CURSO");
             entity.Property(e => e.FacultadId).HasColumnName("FACULTAD_ID");
+            entity.Property(e => e.FechaNacimiento)
+                .HasColumnType("date")
+                .HasColumnName("FECHA_NACIMIENTO");
             entity.Property(e => e.ImagenPerfil)
                 .HasMaxLength(500)
                 .HasDefaultValueSql("'/assets/default.jpg'")
@@ -231,6 +234,7 @@ public partial class AppDbContext : DbContext
 
             entity.HasOne(d => d.Facultad).WithMany(p => p.Usuarios)
                 .HasForeignKey(d => d.FacultadId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("usuario_ibfk_2");
 
             entity.HasOne(d => d.TipoPersonalidad).WithMany(p => p.Usuarios)

@@ -17,9 +17,11 @@ public partial class Usuario
 
     public string? Apellido2 { get; set; }
 
-    public int? FacultadId { get; set; }
+    public int FacultadId { get; set; }
 
-    public decimal? Curso { get; set; }
+    public decimal Curso { get; set; }
+
+    public DateTime FechaNacimiento { get; set; }
 
     public string? ImagenPerfil { get; set; }
 
@@ -29,7 +31,7 @@ public partial class Usuario
 
     public virtual ICollection<ConexionesUsuario> ConexionesUsuarioUsuarioId2Navigations { get; set; } = new List<ConexionesUsuario>();
 
-    public virtual Facultad? Facultad { get; set; }
+    public virtual Facultad Facultad { get; set; } = null!;
 
     public virtual ICollection<RespuestasTest> RespuestasTests { get; set; } = new List<RespuestasTest>();
 

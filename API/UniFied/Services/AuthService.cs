@@ -57,6 +57,7 @@ namespace UniFied.Services
                 Nombre = registroDTO.Nombre,
                 Apellido1 = registroDTO.Apellido1,
                 Apellido2 = registroDTO.Apellido2,
+                FechaNacimiento = registroDTO.FechaNacimiento,
                 FacultadId = registroDTO.FacultadId,
                 Curso = registroDTO.Curso
             };
