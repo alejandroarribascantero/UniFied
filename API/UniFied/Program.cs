@@ -2,6 +2,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using UniFied.Data;
 using UniFied.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,23 @@ builder.Services.AddOpenApi();
 // Configurar Entity Framework Core
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configurar autenticación JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key no configurada")))
+        };
+    });
 
 // Agregar servicios de Swagger
 builder.Services.AddSwaggerGen(options =>
@@ -54,6 +74,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddScoped<TestService>();
 builder.Services.AddScoped<ConexionService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<RecomendacionService>();
 
 builder.Services.AddCors(options =>
 {
@@ -89,7 +110,11 @@ if (app.Environment.IsDevelopment())
 app.UseCors("PermitirFrontend");
 
 app.UseHttpsRedirection();
+
+// Agregar middleware de autenticación y autorización
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
