@@ -25,7 +25,7 @@ document.querySelector("#loginForm").addEventListener("submit", async function (
             if (data.tipoPersonalidadId == null) {
                 window.location.href = "testPersonalidad.html";
             } else {
-                window.location.href = "../index.html";
+                window.location.href = "inicio.html";
             }
 
         } else {
