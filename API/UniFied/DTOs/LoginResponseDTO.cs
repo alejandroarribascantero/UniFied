@@ -7,4 +7,5 @@ public class LoginResponseDTO
     public string Apellido1 { get; set; } = null!;
     public string? Apellido2 { get; set; }
     public string Correo { get; set; } = null!;
+    public int? TipoPersonalidadId { get; set; }
 } 

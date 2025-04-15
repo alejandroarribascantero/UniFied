@@ -37,7 +37,8 @@ namespace UniFied.Services
                 Nombre = usuario.Nombre,
                 Apellido1 = usuario.Apellido1,
                 Apellido2 = usuario.Apellido2,
-                Correo = usuario.Correo
+                Correo = usuario.Correo,
+                TipoPersonalidadId = usuario.TipoPersonalidadId
             };
         }
 

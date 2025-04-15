@@ -21,7 +21,13 @@ document.querySelector("#loginForm").addEventListener("submit", async function (
         if (res.ok) {
             console.log("Login correcto");
             localStorage.setItem("token", data.token);
-            window.location.href = "../index.html";
+            console.log(data);
+            if (data.tipoPersonalidadId == null) {
+                window.location.href = "testPersonalidad.html";
+            } else {
+                window.location.href = "../index.html";
+            }
+
         } else {
             console.error("Error en login:", data);
         }
