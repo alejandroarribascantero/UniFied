@@ -55,7 +55,19 @@ builder.Services.AddScoped<TestService>();
 builder.Services.AddScoped<ConexionService>();
 builder.Services.AddScoped<AuthService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirFrontend", policy =>
+    {
+        policy.WithOrigins("http://127.0.0.1:5502", "http://localhost:5502") // el origen de tu web
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 var app = builder.Build();
+
 
 // Habilitar Swagger en el entorno de desarrollo
 if (app.Environment.IsDevelopment())
@@ -64,7 +76,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mi API v1");
-        c.RoutePrefix = string.Empty;  
+        c.RoutePrefix = string.Empty;
     });
 }
 
@@ -73,6 +85,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseCors("PermitirFrontend");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

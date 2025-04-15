@@ -8,7 +8,6 @@ namespace Unified.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class TestPersonalidadController : ControllerBase
 {
     private readonly TestService _testService;
