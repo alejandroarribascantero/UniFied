@@ -33,6 +33,7 @@ document.querySelector("#registroForm").addEventListener("submit", async functio
 
         if (res.ok) {
             console.log("Registro correcto");
+            window.location.href = "testPersonalidad.html";
         } else {
             console.error("Error en registro:", data);
         }

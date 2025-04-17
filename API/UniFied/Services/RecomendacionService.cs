@@ -40,6 +40,7 @@ public class RecomendacionService
             .Take(5)
             .Select(u => new UsuarioRecomendadoDTO
             {
+                Id = u.Id,
                 Nombre = u.Nombre,
                 Apellido1 = u.Apellido1,
                 Apellido2 = u.Apellido2,

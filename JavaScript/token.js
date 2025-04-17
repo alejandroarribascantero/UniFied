@@ -3,20 +3,24 @@ function checkAuthentication() {
 
     if (!token) {
         const currentPath = window.location.pathname;
-
         window.location.href = "login.html";
+        return;
+    }
+
+    // Verificar si el token es válido
+    try {
+        const decodedToken = decodeJWT(token);
+        const currentTime = Date.now() / 1000; // Convertir a segundos
+
+        if (decodedToken.exp < currentTime) {
+            // Si el token ha expirado, redirigir al login
+            window.location.href = "/login.html";
+        }
+    } catch (error) {
+        console.error("Error al verificar el token:", error);
+        window.location.href = "/login.html";
     }
 }
-
-// Verificar si el token es válido (opcional: puede ser un proceso más detallado)
-const decodedToken = decodeJWT(token);
-const currentTime = Date.now() / 1000; // Convertir a segundos
-
-if (decodedToken.exp < currentTime) {
-    // Si el token ha expirado, redirigir al login
-    window.location.href = "/login.html";
-}
-
 
 // Función para decodificar el token JWT
 function decodeJWT(token) {
@@ -27,4 +31,22 @@ function decodeJWT(token) {
     }).join(''));
 
     return JSON.parse(jsonPayload);
+}
+
+// Función para obtener el ID del usuario desde el token
+function obtenerIdUsuario() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        console.error("No hay token disponible");
+        return null;
+    }
+
+    try {
+        const decodedToken = decodeJWT(token);
+        // El ID del usuario está en la claim NameIdentifier
+        return decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    } catch (error) {
+        console.error("Error al decodificar el token:", error);
+        return null;
+    }
 }

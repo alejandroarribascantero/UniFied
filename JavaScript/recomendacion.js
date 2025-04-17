@@ -34,14 +34,18 @@ function mostrarRecomendaciones(recomendaciones) {
     contenedorSugerencias.innerHTML = ""; // Limpiar contenedor
 
     recomendaciones.forEach(recomendacion => {
+        console.log(recomendacion);
         const card = document.createElement("div");
         card.className = "card cardSugerencia";
         card.innerHTML = `
             <div class="card-title">${recomendacion.nombre}</div>
             <img src="../${recomendacion.imagenPerfil}" class="card-img-top" />
-            <button class="btnConectar" onclick="conectarUsuario(${recomendacion.id})">Conectar</button>
+            <button class="btnConectar" data-usuario-id="${recomendacion.id}">Conectar</button>
         `;
         
+        // Agregar el event listener al botón
+        const botonConectar = card.querySelector('.btnConectar');
+        botonConectar.addEventListener('click', () => conectarUsuario(botonConectar.dataset.usuarioId));
         
         contenedorSugerencias.appendChild(card);
     });
@@ -56,25 +60,35 @@ async function conectarUsuario(usuarioId) {
     }
 
     try {
-        const res = await fetch("https://localhost:7134/api/amigos/solicitud", {
+        // Obtener el ID del usuario actual usando la función obtenerIdUsuario
+        const usuarioActualId = obtenerIdUsuario();
+        if (!usuarioActualId) {
+            throw new Error("No se pudo obtener el ID del usuario actual");
+        }
+
+        const res = await fetch("https://localhost:7134/api/Conexiones/enviar", {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                usuarioId: usuarioId
+                Usuario1Id: parseInt(usuarioActualId),
+                Usuario2Id: parseInt(usuarioId)
             })
         });
 
         if (res.ok) {
             alert("Solicitud de amistad enviada");
+            // Recargar las recomendaciones para actualizar la vista
+            cargarRecomendaciones();
         } else {
-            throw new Error("Error al enviar solicitud");
+            const errorData = await res.json();
+            throw new Error(errorData.mensaje || "Error al enviar solicitud");
         }
     } catch (err) {
         console.error("Error:", err);
-        alert("Error al enviar la solicitud de amistad");
+        alert(err.message || "Error al enviar la solicitud de amistad");
     }
 }
 

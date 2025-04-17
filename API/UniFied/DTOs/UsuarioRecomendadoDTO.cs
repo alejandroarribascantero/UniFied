@@ -2,6 +2,7 @@ namespace UniFied.DTOs;
 
 public class UsuarioRecomendadoDTO
 {
+    public int Id { get; set;}
     public string Nombre { get; set; } = null!;
     public string Apellido1 { get; set; } = null!;
     public string? Apellido2 { get; set; }
