@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Personalidad</title>
+    <title>Test de Personalidad - UniFied</title>
     <script src="../JavaScript/token.js"></script>
     <script>
         checkAuthentication(); // Llamada aquí, justo después de importar
@@ -17,7 +17,7 @@
     <!-- API y Scripts -->
     <script src="../JavaScript/scripts.js"></script>
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="../CSS/styleArribas.css">
 </head>
 <body>
     <!-- Encabezado -->
@@ -30,16 +30,26 @@
 
     <!-- Contenido -->
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Test de personalidad</h2>
-        
-        <form id="testForm">
-            <div id="preguntasContainer">
-                <!-- Las preguntas se cargarán dinámicamente aquí -->
+        <div class="test-container">
+            <div class="test-header">
+                <h2>Test de Personalidad</h2>
+                <p>Descubre tu perfil de personalidad respondiendo a las siguientes preguntas</p>
             </div>
-
-        </form>
+            
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div id="testContainer">
+                <!-- El formulario se cargará dinámicamente aquí -->
+            </div>
+        </div>
     </div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JavaScript/testPersonalidad.js"></script>
 </body>
 </html>

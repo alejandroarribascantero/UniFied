@@ -3,10 +3,13 @@
 /* ============================= */
 body {
     background-image: url('../assets/fondo.jpg');
-    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
 /* ============================= */
@@ -570,4 +573,189 @@ body {
     margin: 5px 0;
     font-size: 0.9em;
     color: #666;
+}
+
+/* ============================= */
+/*      TEST DE PERSONALIDAD    */
+/* ============================= */
+
+.test-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.test-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.test-header h2 {
+    color: #0a3e75;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.test-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.progress-container {
+    margin-bottom: 30px;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+}
+
+.progress-bar {
+    background-color: #0a3e75;
+    transition: width 0.3s ease;
+}
+
+.pregunta {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.pregunta:hover {
+    transform: translateY(-2px);
+}
+
+.pregunta h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.opcion {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.opcion:hover {
+    background-color: #f8f9fa;
+}
+
+.form-check-input {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.form-check-label {
+    font-size: 1.1rem;
+    color: #34495e;
+    cursor: pointer;
+}
+
+#testForm button[type="submit"],
+#testForm button[type="button"] {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+#testForm button[type="submit"] {
+    background-color: #0a3e75;
+    color: white;
+}
+
+#testForm button[type="submit"]:hover {
+    background-color: #0d1624;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#testForm button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+}
+
+#testForm button[type="button"]:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive para el test */
+@media (max-width: 768px) {
+    .test-container {
+        padding: 15px;
+    }
+
+    .test-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .test-header p {
+        font-size: 1rem;
+    }
+
+    .pregunta {
+        padding: 20px;
+    }
+
+    .pregunta h3 {
+        font-size: 1.2rem;
+    }
+
+    .form-check-label {
+        font-size: 1rem;
+    }
+
+    #testForm button[type="submit"],
+    #testForm button[type="button"] {
+        padding: 10px 20px;
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 576px) {
+    .test-container {
+        padding: 10px;
+    }
+
+    .test-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .test-header p {
+        font-size: 0.9rem;
+    }
+
+    .pregunta {
+        padding: 15px;
+    }
+
+    .pregunta h3 {
+        font-size: 1.1rem;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+    }
+
+    #testForm button[type="submit"],
+    #testForm button[type="button"] {
+        padding: 8px 16px;
+        font-size: 1em;
+    }
 }
