@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test de Personalidad - UniFied</title>
     <script src="../JavaScript/token.js"></script>
+    <script src="../JavaScript/logout.js"></script>
     <script>
         checkAuthentication(); // Llamada aquí, justo después de importar
     </script>
@@ -20,13 +21,52 @@
     <link rel="stylesheet" href="../CSS/styleArribas.css">
 </head>
 <body>
-    <!-- Encabezado -->
-    <!-- <nav class="navbarPersonalidad navbar-dark p-3">
-        <div class="container">
-            <img src="../assets/logo.png" alt="Logo" class="logo">
-            <span class="navbar-brand mb-0 h1">UNI-FIED</span>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="inicio.html">
+                <img src="../assets/logo.png" alt="Logo" class="logo">
+                <h1>UNI-FIED</h1>
+            </a>
+            <!-- Botón para colapsar menú en dispositivos móviles -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="inicio.html"><img src="../assets/house.svg" alt="Inicio" class="icon">
+                            Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="perfil.html"><img src="../assets/person.svg" alt="Perfil" class="icon">
+                            Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img src="../assets/search-heart.svg" alt="Amigos" class="icon">
+                            Amigos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img src="../assets/search.svg" alt="Eventos" class="icon">
+                            Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img src="../assets/gear.svg" alt="Configuración" class="icon">
+                            Configuración</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><img src="../assets/chat.svg" alt="Mensajes" class="icon">
+                            Mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()"><img src="../assets/box-arrow-right.svg" alt="Cerrar Sesión" class="icon">
+                            Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </nav> -->
+    </nav>
 
     <!-- Contenido -->
     <div class="container mt-5">

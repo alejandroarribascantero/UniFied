@@ -7,6 +7,7 @@
     <title>UNI-FIED</title>
     <!-- COMENTAR PARA ENTRAR SIN INICIAR SESION -->
     <script src="../JavaScript/token.js"></script>
+    <script src="../JavaScript/logout.js"></script>
     <script>
         checkAuthentication(); 
     </script>
@@ -53,6 +54,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#"><img src="../assets/chat.svg" alt="Mensajes" class="icon">
                             Mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="logout()"><img src="../assets/box-arrow-right.svg" alt="Cerrar Sesión" class="icon">
+                            Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>
