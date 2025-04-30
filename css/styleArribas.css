@@ -85,6 +85,7 @@ body {
     display: flex;
     justify-content: center;
     gap: 30px;
+    padding: 40px 20px;
     flex-wrap: wrap;
 }
 
@@ -432,11 +433,75 @@ body {
 
 /* Caja blanca común */
 .cajaBlanca {
-    margin-top: 20px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 500px;
     text-align: center;
+}
+
+.cajaBlanca:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cajaBlanca h3 {
+    color: #0a3e75;
+    font-size: 2em;
+    margin-bottom: 25px;
+    font-weight: bold;
+    border-bottom: 3px solid #0a3e75;
+    padding-bottom: 10px;
+}
+
+.cajaBlanca h4 {
+    color: #333;
+    font-size: 1.3em;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.cajaBlanca p {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.cajaBlanca .rounded-circle {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 4px solid #0a3e75;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.cajaBlanca:hover .rounded-circle {
+    transform: scale(1.05);
+}
+
+.cajaBlanca:nth-child(2) img {
+    width: 200px;
+    height: auto;
+    margin: 20px 0;
+    transition: transform 0.3s ease;
+}
+
+.cajaBlanca:nth-child(2):hover img {
+    transform: scale(1.05);
+}
+
+.resultadoPersonalidad {
+    font-size: 1.4em;
+    color: #0a3e75;
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(10, 62, 117, 0.1);
+    border-radius: 8px;
 }
 
 /* Contenedor principal */
@@ -486,6 +551,36 @@ body {
     .cajaInfoPersonal .card-text {
         font-size: 1em;
     }
+
+    .cajasPerfil {
+        padding: 20px 10px;
+        gap: 20px;
+    }
+
+    .cajaBlanca {
+        padding: 20px;
+    }
+
+    .cajaBlanca h3 {
+        font-size: 1.8em;
+    }
+
+    .cajaBlanca h4 {
+        font-size: 1.2em;
+    }
+
+    .cajaBlanca p {
+        font-size: 1em;
+    }
+
+    .cajaBlanca .rounded-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .cajaBlanca:nth-child(2) img {
+        width: 150px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -524,6 +619,36 @@ body {
 
     .cajaInfoPersonal .card-text {
         font-size: 0.9em;
+    }
+
+    .cajasPerfil {
+        padding: 15px 5px;
+        gap: 15px;
+    }
+
+    .cajaBlanca {
+        padding: 15px;
+    }
+
+    .cajaBlanca h3 {
+        font-size: 1.5em;
+    }
+
+    .cajaBlanca h4 {
+        font-size: 1.1em;
+    }
+
+    .cajaBlanca p {
+        font-size: 0.9em;
+    }
+
+    .cajaBlanca .rounded-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .cajaBlanca:nth-child(2) img {
+        width: 120px;
     }
 }
 
