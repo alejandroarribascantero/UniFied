@@ -10,4 +10,5 @@ public class registroDTO
     public DateTime FechaNacimiento {get; set;}
     public int FacultadId { get; set; }
     public decimal Curso { get; set; }
+    public string? ImagenPerfil { get; set; }
 } 

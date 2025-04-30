@@ -14,11 +14,11 @@ function checkAuthentication() {
 
         if (decodedToken.exp < currentTime) {
             // Si el token ha expirado, redirigir al login
-            window.location.href = "/login.html";
+            window.location.href = "login.html";
         }
     } catch (error) {
         console.error("Error al verificar el token:", error);
-        window.location.href = "/login.html";
+        window.location.href = "login.html";
     }
 }
 

@@ -75,6 +75,7 @@ builder.Services.AddScoped<TestService>();
 builder.Services.AddScoped<ConexionService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<RecomendacionService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
 builder.Services.AddCors(options =>
 {

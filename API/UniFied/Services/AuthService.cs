@@ -60,7 +60,8 @@ namespace UniFied.Services
                 Apellido2 = registroDTO.Apellido2,
                 FechaNacimiento = registroDTO.FechaNacimiento,
                 FacultadId = registroDTO.FacultadId,
-                Curso = registroDTO.Curso
+                Curso = registroDTO.Curso,
+                ImagenPerfil = registroDTO.ImagenPerfil
             };
 
             _context.Usuarios.Add(usuario);
