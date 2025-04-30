@@ -25,10 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             // Actualizar la información en el HTML
-            document.querySelector('.rounded-circle').src = '../' +data.fotoPerfil || '../assets/logo.png';
+            document.querySelector('.rounded-circle').src = '../' + data.fotoPerfil || '../assets/logo.png';
             document.querySelector('h4 + p').textContent = data.nombreCompleto || 'No disponible';
             document.querySelector('h4:last-of-type + p').textContent = data.carrera || 'No disponible';
             document.querySelector('.resultadoPersonalidad').textContent = data.personalidad || 'No disponible';
+            document.querySelector('.cajaBlanca:nth-child(2) img').src = '../' + data.imagenPersonalidad || '../assets/logo.png';
 
         } catch (error) {
             console.error('Error:', error);

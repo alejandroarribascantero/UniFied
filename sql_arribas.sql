@@ -8,7 +8,8 @@ CREATE TABLE TIPO_PERSONALIDAD (
     CODIGO_MBTI CHAR(4),
     ROL VARCHAR(50),
     ESTRATEGIA VARCHAR(50),
-    DESCRIPCION TEXT
+    DESCRIPCION TEXT,
+    FOTO VARCHAR(500) DEFAULT 'assets/personalidad/default.jpg'
 );
 
 CREATE TABLE FACULTAD (
@@ -81,23 +82,24 @@ CREATE TABLE CONEXIONES_USUARIO (
 );
 
 
-INSERT INTO TIPO_PERSONALIDAD (NOMBRE, CODIGO_MBTI, ROL, ESTRATEGIA, DESCRIPCION) VALUES
-('Abogado', 'INFJ', 'Diplomático', 'Confianza constante', 'Idealistas callados y misteriosos, pero muy inspiradores e incansables.'),
-('Mediador', 'INFP', 'Diplomático', 'Confianza constante', 'Poéticos, amables y altruistas, siempre dispuestos a ayudar a una buena causa.'),
-('Protagonista', 'ENFJ', 'Diplomático', 'Confianza constante', 'Líderes carismáticos e inspiradores, capaces de cautivar a quien los escuche.'),
-('Activista', 'ENFP', 'Diplomático', 'Social y espontánea', 'Espíritus libres entusiastas, creativos y sociables, que siempre pueden encontrar una razón para sonreír.'),
-('Logista', 'ISTJ', 'Centinela', 'Confianza constante', 'Prácticos y centrados en los hechos, cuya fiabilidad no tiene comparación.'),
-('Defensor', 'ISFJ', 'Centinela', 'Confianza constante', 'Protectores dedicados y cálidos, siempre listos para defender a sus seres queridos.'),
-('Ejecutivo', 'ESTJ', 'Centinela', 'Confianza constante', 'Excelentes administradores, inigualables a la hora de gestionar cosas – o personas.'),
-('Cónsul', 'ESFJ', 'Centinela', 'Popularidad social', 'Personas extraordinariamente sociables, comprometidas con el deber y siempre dispuestas a ayudar.'),
-('Virtuoso', 'ISTP', 'Explorador', 'Mejora constante', 'Experimentadores prácticos y valientes, maestros en el uso de todo tipo de herramientas.'),
-('Aventurero', 'ISFP', 'Explorador', 'Mejora constante', 'Artistas flexibles y encantadores, siempre dispuestos a explorar y a experimentar algo nuevo.'),
-('Emprendedor', 'ESTP', 'Explorador', 'Mejora constante', 'Personas inteligentes, enérgicas y muy perceptivas, que realmente disfrutan vivir al límite.'),
-('Animador', 'ESFP', 'Explorador', 'Social y espontánea', 'Animadores espontáneos, enérgicos y entusiastas – la vida nunca es aburrida a su lado.'),
-('Arquitecto', 'INTJ', 'Analista', 'Mejora constante', 'Pensadores estratégicos e imaginativos con un plan para todo.'),
-('Lógico', 'INTP', 'Analista', 'Mejora constante', 'Inventores innovadores con una sed insaciable de conocimiento.'),
-('Comandante', 'ENTJ', 'Analista', 'Mejora constante', 'Líderes audaces, imaginativos y de voluntad fuerte, siempre en busca del camino – o creándolo.'),
-('Innovador', 'ENTP', 'Analista', 'Social y espontánea', 'Pensadores inteligentes y curiosos que no pueden resistirse a un desafío intelectual.');
+INSERT INTO TIPO_PERSONALIDAD (NOMBRE, CODIGO_MBTI, ROL, ESTRATEGIA, DESCRIPCION, FOTO) VALUES
+('Abogado', 'INFJ', 'Diplomático', 'Confianza constante', 'Idealistas callados y misteriosos, pero muy inspiradores e incansables.', 'abogado.svg'),
+('Mediador', 'INFP', 'Diplomático', 'Confianza constante', 'Poéticos, amables y altruistas, siempre dispuestos a ayudar a una buena causa.', 'mediador.svg'),
+('Protagonista', 'ENFJ', 'Diplomático', 'Confianza constante', 'Líderes carismáticos e inspiradores, capaces de cautivar a quien los escuche.', 'protagonista.svg'),
+('Activista', 'ENFP', 'Diplomático', 'Social y espontánea', 'Espíritus libres entusiastas, creativos y sociables, que siempre pueden encontrar una razón para sonreír.', 'activista.svg'),
+('Logista', 'ISTJ', 'Centinela', 'Confianza constante', 'Prácticos y centrados en los hechos, cuya fiabilidad no tiene comparación.', 'logista.svg'),
+('Defensor', 'ISFJ', 'Centinela', 'Confianza constante', 'Protectores dedicados y cálidos, siempre listos para defender a sus seres queridos.', 'defensor.svg'),
+('Ejecutivo', 'ESTJ', 'Centinela', 'Confianza constante', 'Excelentes administradores, inigualables a la hora de gestionar cosas – o personas.', 'ejecutivo.svg'),
+('Cónsul', 'ESFJ', 'Centinela', 'Popularidad social', 'Personas extraordinariamente sociables, comprometidas con el deber y siempre dispuestas a ayudar.', 'consul.svg'),
+('Virtuoso', 'ISTP', 'Explorador', 'Mejora constante', 'Experimentadores prácticos y valientes, maestros en el uso de todo tipo de herramientas.', 'virtuoso.svg'),
+('Aventurero', 'ISFP', 'Explorador', 'Mejora constante', 'Artistas flexibles y encantadores, siempre dispuestos a explorar y a experimentar algo nuevo.', 'aventurero.svg'),
+('Emprendedor', 'ESTP', 'Explorador', 'Mejora constante', 'Personas inteligentes, enérgicas y muy perceptivas, que realmente disfrutan vivir al límite.', 'emprendedor.svg'),
+('Animador', 'ESFP', 'Explorador', 'Social y espontánea', 'Animadores espontáneos, enérgicos y entusiastas – la vida nunca es aburrida a su lado.', 'animador.svg'),
+('Arquitecto', 'INTJ', 'Analista', 'Mejora constante', 'Pensadores estratégicos e imaginativos con un plan para todo.', 'arquitecto.svg'),
+('Lógico', 'INTP', 'Analista', 'Mejora constante', 'Inventores innovadores con una sed insaciable de conocimiento.', 'logico.svg'),
+('Comandante', 'ENTJ', 'Analista', 'Mejora constante', 'Líderes audaces, imaginativos y de voluntad fuerte, siempre en busca del camino – o creándolo.', 'comandante.svg'),
+('Innovador', 'ENTP', 'Analista', 'Social y espontánea', 'Pensadores inteligentes y curiosos que no pueden resistirse a un desafío intelectual.', 'innovador.svg');
+
 
 INSERT INTO PREGUNTAS (
     PREGUNTA, OPCION_A, OPCION_B, OPCION_C, OPCION_D,

@@ -6,5 +6,6 @@ namespace UniFied.DTOs
         public string Carrera { get; set; }
         public string FotoPerfil { get; set; }
         public string Personalidad { get; set; }
+        public string ImagenPersonalidad { get; set; }
     }
 } 

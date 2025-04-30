@@ -28,7 +28,6 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySQL("server=localhost;port=3306;database=UniFied;user=root;password=1234");
@@ -186,6 +185,10 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Estrategia)
                 .HasMaxLength(50)
                 .HasColumnName("ESTRATEGIA");
+            entity.Property(e => e.Foto)
+                .HasMaxLength(500)
+                .HasDefaultValueSql("'assets/personalidad/default.jpg'")
+                .HasColumnName("FOTO");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .HasColumnName("NOMBRE");
@@ -226,7 +229,7 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("FECHA_NACIMIENTO");
             entity.Property(e => e.ImagenPerfil)
                 .HasMaxLength(500)
-                .HasDefaultValueSql("'/assets/default.jpg'")
+                .HasDefaultValueSql("'assets/default.jpg'")
                 .HasColumnName("IMAGEN_PERFIL");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(255)

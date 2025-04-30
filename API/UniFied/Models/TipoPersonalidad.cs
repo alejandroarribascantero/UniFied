@@ -17,6 +17,8 @@ public partial class TipoPersonalidad
 
     public string? Descripcion { get; set; }
 
+    public string? Foto { get; set; }
+
     public virtual ICollection<Pregunta> PreguntaPersonalidadANavigations { get; set; } = new List<Pregunta>();
 
     public virtual ICollection<Pregunta> PreguntaPersonalidadBNavigations { get; set; } = new List<Pregunta>();

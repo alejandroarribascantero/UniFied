@@ -36,7 +36,10 @@ namespace UniFied.Services
                 NombreCompleto = $"{user.Nombre} {user.Apellido1} {user.Apellido2}",
                 Carrera = user.Facultad?.Nombre ?? "No disponible",
                 FotoPerfil = user.ImagenPerfil,
-                Personalidad = user.TipoPersonalidad?.Nombre ?? "No disponible"
+                Personalidad = user.TipoPersonalidad?.Nombre ?? "No disponible",
+                ImagenPersonalidad = user.TipoPersonalidad?.CodigoMbti != null 
+                    ? $"/assets/personalidades/{user.TipoPersonalidad.Nombre.ToLower()}.svg" 
+                    : "/assets/logo.png"
             };
         }
     }
