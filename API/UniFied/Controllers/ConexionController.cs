@@ -79,4 +79,36 @@ public class ConexionesController : ControllerBase
             return BadRequest(new { mensaje = ex.Message });
         }
     }
+
+    // Obtener solicitudes pendientes
+    [HttpGet("pendientes")]
+    public IActionResult ObtenerSolicitudesPendientes()
+    {
+        try
+        {
+            var usuarioId = int.Parse(User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value);
+            var solicitudes = _conexionService.ObtenerSolicitudesPendientes(usuarioId);
+            return Ok(solicitudes);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+    }
+
+    // Obtener amigos
+    [HttpGet("amigos")]
+    public IActionResult ObtenerAmigos()
+    {
+        try
+        {
+            var usuarioId = int.Parse(User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value);
+            var amigos = _conexionService.ObtenerAmigos(usuarioId);
+            return Ok(amigos);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensaje = ex.Message });
+        }
+    }
 }

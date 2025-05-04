@@ -1,6 +1,7 @@
 using UniFied.DTOs;
 using UniFied.Data;
 using UniFied.Models;
+using Microsoft.EntityFrameworkCore;
 
 public class ConexionService
 {
@@ -91,5 +92,53 @@ public class ConexionService
 
         conexion.Estado = "bloqueada";
         _context.SaveChanges();
+    }
+
+    // Obtener solicitudes pendientes
+    public List<ConexionDTO> ObtenerSolicitudesPendientes(int usuarioId)
+    {
+        var solicitudes = _context.ConexionesUsuarios
+            .Include(c => c.UsuarioId1Navigation)
+            .Include(c => c.UsuarioId2Navigation)
+            .Where(c => (c.UsuarioId1 == usuarioId || c.UsuarioId2 == usuarioId) && c.Estado == "pendiente")
+            .Select(c => new ConexionDTO
+            {
+                Id = c.Id,
+                UsuarioId1 = c.UsuarioId1,
+                UsuarioId2 = c.UsuarioId2,
+                Estado = c.Estado,
+                FechaSolicitud = c.FechaSolicitud ?? DateTime.Now,
+                NombreSolicitante = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.Nombre : c.UsuarioId1Navigation.Nombre,
+                ApellidoSolicitante = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.Apellido1 : c.UsuarioId1Navigation.Apellido1,
+                ImagenPerfilSolicitante = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.ImagenPerfil : c.UsuarioId1Navigation.ImagenPerfil
+            })
+            .ToList();
+
+        return solicitudes;
+    }
+
+    // Obtener amigos (conexiones aceptadas)
+    public List<ConexionDTO> ObtenerAmigos(int usuarioId)
+    {
+        var amigos = _context.ConexionesUsuarios
+            .Include(c => c.UsuarioId1Navigation)
+            .Include(c => c.UsuarioId2Navigation)
+            .Where(c => (c.UsuarioId1 == usuarioId || c.UsuarioId2 == usuarioId) && c.Estado == "aceptada")
+            .Select(c => new ConexionDTO
+            {
+                Id = c.Id,
+                UsuarioId1 = c.UsuarioId1,
+                UsuarioId2 = c.UsuarioId2,
+                Estado = c.Estado,
+                FechaSolicitud = c.FechaSolicitud ?? DateTime.Now,
+                NombreSolicitante = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.Nombre : c.UsuarioId1Navigation.Nombre,
+                ApellidoSolicitante = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.Apellido1 : c.UsuarioId1Navigation.Apellido1,
+                ImagenPerfilSolicitante = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.ImagenPerfil : c.UsuarioId1Navigation.ImagenPerfil,
+                Facultad = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.Facultad.Nombre : c.UsuarioId1Navigation.Facultad.Nombre,
+                Curso = c.UsuarioId1 == usuarioId ? c.UsuarioId2Navigation.Curso.ToString() : c.UsuarioId1Navigation.Curso.ToString()
+            })
+            .ToList();
+
+        return amigos;
     }
 }

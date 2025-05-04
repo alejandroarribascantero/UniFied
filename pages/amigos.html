@@ -1,31 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test de Personalidad - UniFied</title>
+    <title>UNI-FIED - Amigos</title>
+    <!-- COMENTAR PARA ENTRAR SIN INICIAR SESION -->
     <script src="../JavaScript/token.js"></script>
     <script src="../JavaScript/logout.js"></script>
     <script>
-        checkAuthentication(); // Llamada aquí, justo después de importar
+        checkAuthentication();
     </script>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- API y Scripts -->
-    <script src="../JavaScript/scripts.js"></script>
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="../CSS/styleArribas.css">
+    <link rel="stylesheet" href="../css/styleArribas.css">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="inicio.html">
-                <img src="../assets/logo.png" alt="Logo" class="logo">
+                <img src="../../assets/logo.png" alt="Logo" class="logo">
                 <h1>UNI-FIED</h1>
             </a>
             <!-- Botón para colapsar menú en dispositivos móviles -->
@@ -40,11 +35,12 @@
                             Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="perfil.html"><img src="../assets/person.svg" alt="Perfil" class="icon">
+                        <a class="nav-link" href="perfil.html"><img src="../assets/person.svg" alt="Perfil"
+                                class="icon">
                             Perfil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="amigos.html"><img src="../assets/search-heart.svg" alt="Amigos" class="icon">
+                        <a class="nav-link active" href="amigos.html"><img src="../assets/search-heart.svg" alt="Amigos" class="icon">
                             Amigos</a>
                     </li>
                     <li class="nav-item">
@@ -68,28 +64,24 @@
         </div>
     </nav>
 
-    <!-- Contenido -->
-    <div class="container mt-5">
-        <div class="test-container">
-            <div class="test-header">
-                <h2>Test de Personalidad</h2>
-                <p>Descubre tu perfil de personalidad respondiendo a las siguientes preguntas</p>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card cajaEventosSugerencias">
+                    <div class="card-body">
+                        <h5 class="card-title">Mis Amigos</h5>
+                        <div class="contenedorAmigos" id="contenedorAmigos">
+                            <!-- Las tarjetas de amigos se cargarán dinámicamente aquí -->
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div id="testContainer">
-                <!-- El formulario se cargará dinámicamente aquí -->
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JavaScript/testPersonalidad.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../JavaScript/amigos.js"></script>
 </body>
+
 </html>
