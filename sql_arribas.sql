@@ -27,7 +27,7 @@ CREATE TABLE USUARIO(
     FACULTAD_ID INT  NOT NULL,
     CURSO NUMERIC(2)  NOT NULL,
     FECHA_NACIMIENTO DATE NOT NULL,
-    IMAGEN_perfiles VARCHAR(500) DEFAULT 'assets/perfiles/default.jpg',
+    IMAGEN_PERFIL VARCHAR(500) DEFAULT 'assets/perfiles/default.jpg',
     TIPO_PERSONALIDAD_ID INT,
     FOREIGN KEY (TIPO_PERSONALIDAD_ID) REFERENCES TIPO_PERSONALIDAD(ID),
     FOREIGN KEY (FACULTAD_ID) REFERENCES FACULTAD(ID)
@@ -137,7 +137,7 @@ INSERT INTO FACULTAD (NOMBRE) VALUES
 
 INSERT INTO USUARIO (
     CORREO, CONTRASENA, NOMBRE, APELLIDO1, APELLIDO2, FACULTAD_ID,
-    CURSO, FECHA_NACIMIENTO, IMAGEN_perfiles, TIPO_PERSONALIDAD_ID
+    CURSO, FECHA_NACIMIENTO, IMAGEN_PERFIL, TIPO_PERSONALIDAD_ID
 ) VALUES
 ('marta.gomez@example.com', 'hashedpassword1', 'Marta', 'Gómez', 'López', 1, 2, '2002-06-15', 'assets/perfiles/default.jpg', 1),
 ('carlos.perez@example.com', 'hashedpassword2', 'Carlos', 'Pérez', NULL, 2, 1, '2003-09-20', 'assets/perfiles/default.jpg', 5),
@@ -179,4 +179,4 @@ INSERT INTO USUARIO (
 ('alejandro.campos@unified.edu', 'pass123', 'Alejandro', 'Campos', 'Gil', 3, 2, '2003-09-30', 'assets/perfiles/default.jpg', 9),
 ('patricia.blanco@unified.edu', 'pass123', 'Patricia', 'Blanco', 'Muñoz', 2, 4, '2000-02-18', 'assets/perfiles/default.jpg', 6),
 ('oscar.moreno@unified.edu', 'pass123', 'Óscar', 'Moreno', 'Navarro', 6, 1, '2004-12-21', 'assets/perfiles/default.jpg', 15),
-('prueba@prueba.com', '$2a$11$ILJBCWk2wSUHjr7ZCfaISu2dk8iry7pbg84gFrafFMaRPhhYrREmW', 'prueba', 'prueba', 'prueba', 6, 2, '2000-01-01', 'assets/perfiles/prueba@prueba.com.avif', 15);
+('prueba@prueba.com', '$2a$11$ILJBCWk2wSUHjr7ZCfaISu2dk8iry7pbg84gFrafFMaRPhhYrREmW', 'prueba', 'prueba', 'prueba', 6, 2, '2000-01-01', 'assets/perfiles/prueba@prueba.com.png', 15);
