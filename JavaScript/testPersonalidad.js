@@ -230,7 +230,7 @@ async function enviarRespuestas() {
     // Verificar que todas las preguntas tengan respuesta
     const preguntasSinResponder = preguntas.filter(pregunta => !respuestasGuardadas[pregunta.id]);
     if (preguntasSinResponder.length > 0) {
-        alert(`Por favor, responde todas las preguntas. Faltan ${preguntasSinResponder.length} preguntas por responder.`);
+        console.log(`Por favor, responde todas las preguntas. Faltan ${preguntasSinResponder.length} preguntas por responder.`);
         return;
     }
 
@@ -262,11 +262,11 @@ async function enviarRespuestas() {
 
         const resultado = await res.json();
         limpiarRespuestasGuardadas(); // Limpiar respuestas después de enviar exitosamente
-        alert("Test completado exitosamente");
+        console.log("Test completado exitosamente");
         window.location.href = 'inicio.html'; // Redirigir a inicio
     } catch (err) {
         console.error("Error:", err);
-        alert("Error al enviar el test: " + err.message);
+        console.log("Error al enviar el test: " + err.message);
     }
 }
 

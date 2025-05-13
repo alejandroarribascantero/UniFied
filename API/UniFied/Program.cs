@@ -5,6 +5,7 @@ using UniFied.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -81,9 +82,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirFrontend", policy =>
     {
-        policy.WithOrigins("http://127.0.0.1:5502", "http://localhost:5502") // el origen de tu web
+        policy.WithOrigins("http://127.0.0.1:5502", "http://localhost:5502", "https://localhost:5502")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -111,6 +113,14 @@ if (app.Environment.IsDevelopment())
 app.UseCors("PermitirFrontend");
 
 app.UseHttpsRedirection();
+
+// Habilitar archivos estáticos desde la carpeta assets
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "assets")),
+    RequestPath = "/assets"
+});
 
 // Agregar middleware de autenticación y autorización
 app.UseAuthentication();

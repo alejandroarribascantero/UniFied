@@ -79,7 +79,7 @@ async function conectarUsuario(usuarioId) {
         });
 
         if (res.ok) {
-            alert("Solicitud de amistad enviada");
+            console.log("Solicitud de amistad enviada");
             // Recargar las recomendaciones para actualizar la vista
             cargarRecomendaciones();
         } else {
@@ -88,7 +88,7 @@ async function conectarUsuario(usuarioId) {
         }
     } catch (err) {
         console.error("Error:", err);
-        alert(err.message || "Error al enviar la solicitud de amistad");
+        console.log(err.message || "Error al enviar la solicitud de amistad");
     }
 }
 
@@ -165,7 +165,7 @@ async function aceptarSolicitud(usuario1Id, usuario2Id) {
         });
 
         if (res.ok) {
-            alert("Solicitud aceptada correctamente");
+            console.log("Solicitud aceptada correctamente");
             cargarSolicitudesPendientes(); // Recargar las solicitudes
         } else {
             const errorData = await res.json();
@@ -173,7 +173,7 @@ async function aceptarSolicitud(usuario1Id, usuario2Id) {
         }
     } catch (err) {
         console.error("Error:", err);
-        alert(err.message || "Error al aceptar la solicitud");
+        console.log(err.message || "Error al aceptar la solicitud");
     }
 }
 
@@ -199,7 +199,7 @@ async function rechazarSolicitud(usuario1Id, usuario2Id) {
         });
 
         if (res.ok) {
-            alert("Solicitud rechazada correctamente");
+            console.log("Solicitud rechazada correctamente");
             cargarSolicitudesPendientes(); // Recargar las solicitudes
         } else {
             const errorData = await res.json();
@@ -207,7 +207,7 @@ async function rechazarSolicitud(usuario1Id, usuario2Id) {
         }
     } catch (err) {
         console.error("Error:", err);
-        alert(err.message || "Error al rechazar la solicitud");
+        console.log(err.message || "Error al rechazar la solicitud");
     }
 }
 

@@ -69,13 +69,13 @@ function mostrarAmigos(amigos) {
 // Función para enviar mensaje a un amigo
 function enviarMensaje(usuario1Id, usuario2Id) {
     // TODO: Implementar funcionalidad de mensajes
-    alert("Funcionalidad de mensajes en desarrollo");
+    console.log("Funcionalidad de mensajes en desarrollo");
 }
 
 // Función para ver el perfil de un amigo
 function verPerfil(usuario1Id, usuario2Id) {
     // TODO: Implementar redirección al perfil del amigo
-    alert("Funcionalidad de perfil en desarrollo");
+    console.log("Funcionalidad de perfil en desarrollo");
 }
 
 // Cargar amigos cuando el documento esté listo

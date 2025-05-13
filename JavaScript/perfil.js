@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         } catch (error) {
             console.error('Error:', error);
-            alert('Error al cargar los datos del perfil');
+            console.log('Error al cargar los datos del perfil');
         }
     }
 
