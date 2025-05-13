@@ -55,11 +55,13 @@ document.querySelector("#registroForm").addEventListener("submit", async functio
 
         if (res.ok) {
             console.log("Registro exitoso");
-            window.location.href = "login.html";
+            window.location.href = "inicio.html";
         } else {
             console.log("Error en el registro: " + responseText);
+            window.location.href = "inicio.html";
         }
     } catch (error) {
+        window.location.href = "inicio.html";
         console.error("Error completo:", error);
         console.log("Error en la petición: " + error.message);
     }
